@@ -12,41 +12,21 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: _title,
-      home: RoutingWidget(),
+      home: HomeWidget(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class RoutingWidget extends StatefulWidget {
-  const RoutingWidget({super.key});
+class HomeWidget extends StatefulWidget {
+  const HomeWidget({super.key});
 
   @override
-  State<RoutingWidget> createState() => _RoutingWidgetState();
+  State<HomeWidget> createState() => _HomeWidgetState();
 }
 
-class _RoutingWidgetState extends State<RoutingWidget> {
+class _HomeWidgetState extends State<HomeWidget> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle = TextStyle(
-      fontSize: 30, fontWeight: FontWeight.bold, fontFamily: 'DMSans');
-
-  static const List<Widget> _widgetsList = <Widget>[
-    Text(
-      'Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Courses',
-      style: optionStyle,
-    ),
-    Text(
-      'Monitor',
-      style: optionStyle,
-    ),
-    Text(
-      'Profile',
-      style: optionStyle,
-    ),
-  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -59,20 +39,98 @@ class _RoutingWidgetState extends State<RoutingWidget> {
     Color backgroundColor = const Color.fromARGB(255, 240, 240, 240);
     Color foregroundColor = const Color.fromARGB(255, 72, 55, 87);
 
-    // String _title = _widgetsList.elementAt(_selectedIndex) as String;
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'App Name',
-          style: TextStyle(fontFamily: 'DMSans'),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            SvgPicture.asset(
+              'assets/icons/bell.svg',
+              width: 28,
+              height: 28,
+              colorFilter: ColorFilter.mode(foregroundColor, BlendMode.srcIn),
+            )
+          ],
         ),
         backgroundColor: backgroundColor,
         foregroundColor: foregroundColor,
         elevation: 0,
       ),
-      body: Center(
-        child: _widgetsList.elementAt(_selectedIndex),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Homepage".toUpperCase(),
+              style: const TextStyle(
+                  fontSize: 13,
+                  fontFamily: "DMSans",
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
+                  color: Color.fromARGB(255, 116, 116, 116)),
+            ),
+            const Text(
+              "Welcome, professor",
+              style: TextStyle(fontSize: 28, fontFamily: "DMSans"),
+            ),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 16),
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Color.fromARGB(255, 255, 179, 104),
+              ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Be a real examiner",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontFamily: "DMSans",
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1,
+                        color: Colors.black
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    const Text(
+                      "View your courses and add new quizzes for students",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: "DMSans",
+                      ),
+                    ),
+                    const Divider(
+                      height: 32,
+                      color: Colors.black54,
+                    ),
+                    TextButton(
+                      style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 12),
+                          backgroundColor: Colors.white,
+                          shape: const StadiumBorder()),
+                      // onPressed: () => print('Hello'),
+                      onPressed: null,
+                      child: const Text(
+                        'Apply now',
+                        style: TextStyle(
+                            fontFamily: "DMSans", color: Colors.black),
+                      ),
+                    ),
+                  ]),
+            ),
+            const Text(
+              "Latest courses",
+              style: TextStyle(fontSize: 22, fontFamily: "DMSans"),
+            ),
+            ListView()
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: foregroundColor,
