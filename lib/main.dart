@@ -56,81 +56,86 @@ class _RoutingWidgetState extends State<RoutingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    ColorFilter whiteColor =
-        const ColorFilter.mode(Colors.white, BlendMode.srcIn);
+    Color backgroundColor = const Color.fromARGB(255, 240, 240, 240);
+    Color foregroundColor = const Color.fromARGB(255, 72, 55, 87);
+
+    // String _title = _widgetsList.elementAt(_selectedIndex) as String;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Quizzed',
+          'App Name',
           style: TextStyle(fontFamily: 'DMSans'),
         ),
+        backgroundColor: backgroundColor,
+        foregroundColor: foregroundColor,
+        elevation: 0,
       ),
       body: Center(
         child: _widgetsList.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: foregroundColor,
         items: [
           BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/home.svg',
                 width: 24,
                 height: 24,
-                colorFilter: whiteColor,
+                colorFilter: ColorFilter.mode(foregroundColor, BlendMode.srcIn),
               ),
               label: "Home",
-              backgroundColor: Colors.blue,
+              backgroundColor: backgroundColor,
               activeIcon: SvgPicture.asset(
                 'assets/icons/home-1.svg',
                 width: 24,
                 height: 24,
-                colorFilter: whiteColor,
+                colorFilter: ColorFilter.mode(foregroundColor, BlendMode.srcIn),
               )),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/bookmark.svg',
                 width: 24,
                 height: 24,
-                colorFilter: whiteColor,
+                colorFilter: ColorFilter.mode(foregroundColor, BlendMode.srcIn),
               ),
               label: "Courses",
-              backgroundColor: Colors.blue,
+              backgroundColor: backgroundColor,
               activeIcon: SvgPicture.asset(
                 'assets/icons/bookmark-1.svg',
                 width: 24,
                 height: 24,
-                colorFilter: whiteColor,
+                colorFilter: ColorFilter.mode(foregroundColor, BlendMode.srcIn),
               )),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/eye.svg',
                 width: 24,
                 height: 24,
-                colorFilter: whiteColor,
+                colorFilter: ColorFilter.mode(foregroundColor, BlendMode.srcIn),
               ),
               label: "Monitor",
-              backgroundColor: Colors.blue,
+              backgroundColor: backgroundColor,
               activeIcon: SvgPicture.asset(
                 'assets/icons/eye-1.svg',
                 width: 24,
                 height: 24,
-                colorFilter: whiteColor,
+                colorFilter: ColorFilter.mode(foregroundColor, BlendMode.srcIn),
               )),
           BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/user.svg',
                 width: 24,
                 height: 24,
-                colorFilter: whiteColor,
+                colorFilter: ColorFilter.mode(foregroundColor, BlendMode.srcIn),
               ),
               label: "Profile",
-              backgroundColor: Colors.blue,
+              backgroundColor: backgroundColor,
               activeIcon: SvgPicture.asset(
                 'assets/icons/user-1.svg',
                 width: 24,
                 height: 24,
-                colorFilter:
-                    const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                colorFilter: ColorFilter.mode(foregroundColor, BlendMode.srcIn),
               )),
         ],
         currentIndex: _selectedIndex,
