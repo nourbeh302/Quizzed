@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:quizzed/widgets/app_bar.dart';
 
 class HomeWidget extends StatefulWidget {
   const HomeWidget({super.key});
@@ -22,24 +22,8 @@ class _HomeWidgetState extends State<HomeWidget> {
   Widget build(BuildContext context) {
     Color backgroundColor = const Color.fromARGB(255, 240, 240, 240);
     Color foregroundColor = const Color.fromARGB(255, 72, 55, 87);
-
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            SvgPicture.asset(
-              'assets/icons/bell.svg',
-              width: 28,
-              height: 28,
-              colorFilter: ColorFilter.mode(foregroundColor, BlendMode.srcIn),
-            )
-          ],
-        ),
-        backgroundColor: backgroundColor,
-        foregroundColor: foregroundColor,
-        elevation: 0,
-      ),
+      appBar: const AppBarWidget(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
