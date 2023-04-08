@@ -33,14 +33,14 @@ class _HomeWidgetState extends State<HomeWidget> {
               "Homepage".toUpperCase(),
               style: const TextStyle(
                   fontSize: 13,
-                  fontFamily: "DMSans",
+                  fontFamily: "Helvetica",
                   fontWeight: FontWeight.bold,
                   letterSpacing: 2,
                   color: Color.fromARGB(255, 116, 116, 116)),
             ),
             const Text(
               "Welcome, professor",
-              style: TextStyle(fontSize: 28, fontFamily: "DMSans"),
+              style: TextStyle(fontSize: 28, fontFamily: "Helvetica"),
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 16),
@@ -56,7 +56,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       "Be a real examiner",
                       style: TextStyle(
                           fontSize: 28,
-                          fontFamily: "DMSans",
+                          fontFamily: "Helvetica",
                           fontWeight: FontWeight.w900,
                           letterSpacing: 1,
                           color: Colors.black),
@@ -68,7 +68,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                       "View your courses and add new quizzes for students",
                       style: TextStyle(
                         fontSize: 16,
-                        fontFamily: "DMSans",
+                        fontFamily: "Helvetica",
                       ),
                     ),
                     const Divider(
@@ -81,12 +81,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                               horizontal: 32, vertical: 12),
                           backgroundColor: Colors.white,
                           shape: const StadiumBorder()),
-                      // onPressed: () => print('Hello'),
                       onPressed: null,
                       child: const Text(
                         'Apply now',
                         style: TextStyle(
-                            fontFamily: "DMSans", color: Colors.black),
+                            fontFamily: "Helvetica", color: Colors.black),
                       ),
                     ),
                   ]),
@@ -96,7 +95,7 @@ class _HomeWidgetState extends State<HomeWidget> {
             ),
             const Text(
               "Latest courses",
-              style: TextStyle(fontSize: 22, fontFamily: "DMSans"),
+              style: TextStyle(fontSize: 22, fontFamily: "Helvetica"),
             ),
             Container(
               height: 211,
@@ -149,7 +148,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                               const Text(
                                 "Cybersecurity",
                                 style: TextStyle(
-                                    fontFamily: "DMSans", fontSize: 24),
+                                    fontFamily: "Helvetica", fontSize: 24),
                               ),
                               const SizedBox(
                                 height: 16,
@@ -160,12 +159,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         horizontal: 32, vertical: 12),
                                     backgroundColor: const Color.fromARGB(255, 245, 245, 245),
                                     shape: const StadiumBorder()),
-                                // onPressed: () => print('Hello'),
                                 onPressed: null,
                                 child: const Text(
                                   'Go to courses',
                                   style: TextStyle(
-                                      fontFamily: "DMSans",
+                                      fontFamily: "Helvetica",
                                       color: Colors.black),
                                 ),
                               ),
@@ -220,7 +218,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                               const Text(
                                 "Trigonometry",
                                 style: TextStyle(
-                                    fontFamily: "DMSans", fontSize: 24),
+                                    fontFamily: "Helvetica", fontSize: 24),
                               ),
                               const SizedBox(
                                 height: 16,
@@ -231,12 +229,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         horizontal: 32, vertical: 12),
                                     backgroundColor: const Color.fromARGB(255, 245, 245, 245),
                                     shape: const StadiumBorder()),
-                                // onPressed: () => print('Hello'),
                                 onPressed: null,
                                 child: const Text(
                                   'Go to courses',
                                   style: TextStyle(
-                                      fontFamily: "DMSans",
+                                      fontFamily: "Helvetica",
                                       color: Colors.black),
                                 ),
                               ),
@@ -291,7 +288,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                               const Text(
                                 "Listening",
                                 style: TextStyle(
-                                    fontFamily: "DMSans", fontSize: 24),
+                                    fontFamily: "Helvetica", fontSize: 24),
                               ),
                               const SizedBox(
                                 height: 16,
@@ -302,12 +299,11 @@ class _HomeWidgetState extends State<HomeWidget> {
                                         horizontal: 32, vertical: 12),
                                     backgroundColor: const Color.fromARGB(255, 245, 245, 245),
                                     shape: const StadiumBorder()),
-                                // onPressed: () => print('Hello'),
                                 onPressed: null,
                                 child: const Text(
                                   'Go to courses',
                                   style: TextStyle(
-                                      fontFamily: "DMSans",
+                                      fontFamily: "Helvetica",
                                       color: Colors.black),
                                 ),
                               ),

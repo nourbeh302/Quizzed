@@ -4,14 +4,14 @@ import 'package:quizzed/constant.dart';
 
 final _formKey = GlobalKey<FormState>();
 
-class LoginWidget extends StatefulWidget {
-  const LoginWidget({super.key});
+class RegisterWidget extends StatefulWidget {
+  const RegisterWidget({super.key});
 
   @override
-  State<LoginWidget> createState() => _LoginWidgetState();
+  State<RegisterWidget> createState() => _RegisterWidgetState();
 }
 
-class _LoginWidgetState extends State<LoginWidget> {
+class _RegisterWidgetState extends State<RegisterWidget> {
   // Define input controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -30,7 +30,7 @@ class _LoginWidgetState extends State<LoginWidget> {
       backgroundColor: scaffoldColor,
       appBar: AppBar(
         title: Text(
-          "Login",
+          "Register",
           style: TextStyle(fontFamily: baseFontFamily, fontSize: appBarFontSize),
         ),
         backgroundColor: primaryColor,
@@ -102,9 +102,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                     height: 16,
                   ),
                   InkWell(
-                    onTap: () => Navigator.pushNamed(context, '/register'),
+                    onTap: () => Navigator.pushNamed(context, '/login'),
                     child: Text(
-                      'A newbie here? Create new account',
+                      'Already have account? Sign in',
                       style: TextStyle(
                           fontFamily: baseFontFamily,
                           fontSize: linkFontSize,
@@ -125,31 +125,11 @@ class _LoginWidgetState extends State<LoginWidget> {
                       padding: MaterialStateProperty.all(buttonPadding),
                     ),
                     child: Text(
-                      'Login',
+                      'Register',
                       style: TextStyle(
                           fontSize: buttonFontSize,
                           fontFamily: baseFontFamily,
                           color: Colors.white),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(32),
-                      padding: buttonPadding,
-                      shape: const StadiumBorder(),
-                      side: BorderSide(width: 1, color: primaryColor),
-                    ),
-                    // onPressed: () => Navigator.pushNamed(context, '/'),
-                    onPressed: null,
-                    child: Text(
-                      'Sign in as Professor',
-                      style: TextStyle(
-                          fontFamily: baseFontFamily,
-                          color: primaryColor,
-                          fontSize: buttonFontSize),
                     ),
                   ),
                 ],
