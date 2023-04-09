@@ -1,26 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:quizzed/constant.dart';
+import 'package:quizzed/models/auth.dart';
+import 'package:quizzed/validators/email_validator.dart';
+import 'package:quizzed/validators/password_validator.dart';
 // import 'package:quizzed/widgets/app_bar.dart';
 
 final _formKey = GlobalKey<FormState>();
 
-class LoginWidget extends StatefulWidget {
-  const LoginWidget({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<LoginWidget> createState() => _LoginWidgetState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginWidgetState extends State<LoginWidget> {
+class _LoginScreenState extends State<LoginScreen> {
   // Define input controllers
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _emailValidator = EmailValidator();
+  final _passwordValidator = PasswordValidator();
+
+  Future<void> logIn() async {
+    await Auth().logIn(
+        email: _emailController.text, password: _passwordController.text);
+
+    navigateToHomeScreen();
+  }
+
+  void navigateToHomeScreen() {
+    Navigator.pushNamed(context, '/');
+  }
 
   @override
   void dispose() {
     // Clean up the controller when the widget is removed from the widget tree
-    emailController.dispose();
-    passwordController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -31,9 +47,11 @@ class _LoginWidgetState extends State<LoginWidget> {
       appBar: AppBar(
         title: Text(
           "Login",
-          style: TextStyle(fontFamily: baseFontFamily, fontSize: appBarFontSize),
+          style:
+              TextStyle(fontFamily: baseFontFamily, fontSize: appBarFontSize),
         ),
-        backgroundColor: primaryColor,
+        automaticallyImplyLeading: false,
+        elevation: 0,
       ),
       body: Container(
           margin: const EdgeInsets.fromLTRB(0, 48, 0, 0),
@@ -50,15 +68,19 @@ class _LoginWidgetState extends State<LoginWidget> {
                     child: Column(
                       children: [
                         TextFormField(
-                          controller: emailController,
+                          controller: _emailController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Fill the field";
                             }
+                            if (!_emailValidator.isEmailValid(value)) {
+                              return "Please enter a valid email address";
+                            }
                             return null;
                           },
                           style: TextStyle(
-                              fontFamily: baseFontFamily, fontSize: inputFontSize),
+                              fontFamily: baseFontFamily,
+                              fontSize: inputFontSize),
                           decoration: InputDecoration(
                               hintText: "Email",
                               hintStyle: TextStyle(
@@ -74,16 +96,20 @@ class _LoginWidgetState extends State<LoginWidget> {
                           height: 32,
                         ),
                         TextFormField(
-                          controller: passwordController,
+                          controller: _passwordController,
                           obscureText: true,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Fill the field";
                             }
+                            if (!_passwordValidator.isPasswordValid(value)) {
+                              return "Passwords should be at least ${_passwordValidator.minCharacters} characters";
+                            }
                             return null;
                           },
                           style: TextStyle(
-                              fontFamily: baseFontFamily, fontSize: inputFontSize),
+                              fontFamily: baseFontFamily,
+                              fontSize: inputFontSize),
                           decoration: InputDecoration(
                               hintText: "Password",
                               hintStyle: TextStyle(
@@ -116,14 +142,20 @@ class _LoginWidgetState extends State<LoginWidget> {
               Column(
                 children: [
                   ElevatedButton(
-                    onPressed: () => print('email: ${emailController.text}\npassword: ${passwordController.text}'),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Processing Data')),
+                        );
+                        logIn();
+                      }
+                    },
                     style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(primaryColor),
-                      minimumSize:
-                          MaterialStateProperty.all(const Size.fromHeight(32)),
-                      shape: const MaterialStatePropertyAll(StadiumBorder()),
-                      padding: MaterialStateProperty.all(buttonPadding),
-                    ),
+                        minimumSize: MaterialStateProperty.all(
+                            const Size.fromHeight(32)),
+                        shape: const MaterialStatePropertyAll(StadiumBorder()),
+                        padding: MaterialStateProperty.all(buttonPadding),
+                        elevation: MaterialStateProperty.all(0)),
                     child: Text(
                       'Login',
                       style: TextStyle(
@@ -142,8 +174,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                       shape: const StadiumBorder(),
                       side: BorderSide(width: 1, color: primaryColor),
                     ),
-                    // onPressed: () => Navigator.pushNamed(context, '/'),
-                    onPressed: null,
+                    onPressed: () => logIn(),
                     child: Text(
                       'Sign in as Professor',
                       style: TextStyle(

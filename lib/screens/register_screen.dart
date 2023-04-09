@@ -1,26 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:quizzed/constant.dart';
+import 'package:quizzed/models/auth.dart';
+import 'package:quizzed/validators/email_validator.dart';
+import 'package:quizzed/validators/password_validator.dart';
 // import 'package:quizzed/widgets/app_bar.dart';
 
 final _formKey = GlobalKey<FormState>();
 
-class RegisterWidget extends StatefulWidget {
-  const RegisterWidget({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<RegisterWidget> createState() => _RegisterWidgetState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterWidgetState extends State<RegisterWidget> {
+class _RegisterScreenState extends State<RegisterScreen> {
   // Define input controllers
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _emailValidator = EmailValidator();
+  final _passwordValidator = PasswordValidator();
+
+  Future<void> register() async {
+    await Auth().register(
+        email: _emailController.text, password: _passwordController.text);
+
+    navigateToHomeScreen();
+  }
+
+  void navigateToHomeScreen() {
+    Navigator.pushNamed(context, '/');
+  }
 
   @override
   void dispose() {
     // Clean up the controller when the widget is removed from the widget tree
-    emailController.dispose();
-    passwordController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -31,9 +47,11 @@ class _RegisterWidgetState extends State<RegisterWidget> {
       appBar: AppBar(
         title: Text(
           "Register",
-          style: TextStyle(fontFamily: baseFontFamily, fontSize: appBarFontSize),
+          style:
+              TextStyle(fontFamily: baseFontFamily, fontSize: appBarFontSize),
         ),
         backgroundColor: primaryColor,
+        elevation: 0,
       ),
       body: Container(
           margin: const EdgeInsets.fromLTRB(0, 48, 0, 0),
@@ -50,15 +68,19 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                     child: Column(
                       children: [
                         TextFormField(
-                          controller: emailController,
+                          controller: _emailController,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Fill the field";
                             }
+                            if (!_emailValidator.isEmailValid(value)) {
+                              return "Please enter a valid email address";
+                            }
                             return null;
                           },
                           style: TextStyle(
-                              fontFamily: baseFontFamily, fontSize: inputFontSize),
+                              fontFamily: baseFontFamily,
+                              fontSize: inputFontSize),
                           decoration: InputDecoration(
                               hintText: "Email",
                               hintStyle: TextStyle(
@@ -74,16 +96,20 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                           height: 32,
                         ),
                         TextFormField(
-                          controller: passwordController,
+                          controller: _passwordController,
                           obscureText: true,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Fill the field";
                             }
+                            if (!_passwordValidator.isPasswordValid(value)) {
+                              return "Passwords should be at least ${_passwordValidator.minCharacters} characters";
+                            }
                             return null;
                           },
                           style: TextStyle(
-                              fontFamily: baseFontFamily, fontSize: inputFontSize),
+                              fontFamily: baseFontFamily,
+                              fontSize: inputFontSize),
                           decoration: InputDecoration(
                               hintText: "Password",
                               hintStyle: TextStyle(
@@ -116,7 +142,14 @@ class _RegisterWidgetState extends State<RegisterWidget> {
               Column(
                 children: [
                   ElevatedButton(
-                    onPressed: () => print('email: ${emailController.text}\npassword: ${passwordController.text}'),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Processing Data')),
+                        );
+                        register();
+                      }
+                    },
                     style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(primaryColor),
                       minimumSize:
