@@ -4,7 +4,6 @@ import 'package:quizzed/models/auth.dart';
 import 'package:quizzed/validators/email_validator.dart';
 import 'package:quizzed/validators/password_validator.dart';
 import 'package:quizzed/widgets/quizzed_appbar.dart';
-// import 'package:quizzed/widgets/app_bar.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -23,14 +22,30 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordValidator = PasswordValidator();
 
   Future<void> logIn() async {
-    await Auth().logIn(
+    String result = await Auth().logIn(
         email: _emailController.text, password: _passwordController.text);
 
-    navigateToHomeScreen();
+    if (result == 'Success') {
+      navigateToHomeScreen();
+    } else {
+      showErrorDialog(result);
+    }
   }
 
   void navigateToHomeScreen() {
     Navigator.pushNamed(context, '/');
+  }
+
+  void showErrorDialog(String error) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          error,
+          style: Theme.of(context).textTheme.labelLarge,
+        ),
+      ),
+    );
   }
 
   @override
@@ -143,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                     },
                     child: Text('Login',
-                        style: Theme.of(context).textTheme.bodyMedium),
+                        style: Theme.of(context).textTheme.labelMedium),
                   ),
                   const SizedBox(
                     height: 12,
@@ -151,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   OutlinedButton(
                     onPressed: () => logIn(),
                     child: Text('Sign in as Professor',
-                        style: Theme.of(context).textTheme.bodyMedium),
+                        style: Theme.of(context).textTheme.labelMedium),
                   ),
                 ],
               ),

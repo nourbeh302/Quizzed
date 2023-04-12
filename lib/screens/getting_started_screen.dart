@@ -22,8 +22,7 @@ class GettingStartedScreen extends StatelessWidget {
                   width: double.infinity,
                   child: AspectRatio(
                     aspectRatio: 1,
-                    child: Image.asset(
-                        'assets/images/DrawKit Larry Character Illustration (8).png'),
+                    child: Image.asset('assets/images/larry-08.png'),
                   ),
                 ),
                 Text(
@@ -36,7 +35,7 @@ class GettingStartedScreen extends StatelessWidget {
                 ),
                 Text(
                   "Unlock your knowledge potential with our quiz management app. Login now and start creating, managing, and acing your quizzes!",
-                  style: Theme.of(context).textTheme.bodySmall,
+                  style: Theme.of(context).textTheme.bodyMedium,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(
@@ -47,7 +46,7 @@ class GettingStartedScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () => Navigator.pushNamed(context, '/login'),
               child: Text('Get started',
-                  style: Theme.of(context).textTheme.bodyMedium),
+                  style: Theme.of(context).textTheme.labelMedium),
             )
           ],
         ),

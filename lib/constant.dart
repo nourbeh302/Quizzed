@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 // Colors
-Color scaffoldColor = const Color(0xFFF7F0E5);
+Color scaffoldColor = const Color.fromARGB(255, 247, 240, 229);
 Color primaryColor = const Color.fromARGB(255, 155, 129, 193);
 Color secondaryColor = const Color(0xFF1D1D1D);
 Color mutedColor = const Color(0xFF525252);
@@ -71,24 +71,13 @@ AppBarTheme defaultAppBarTheme = AppBarTheme(
 
 TextTheme defaultTextTheme = const TextTheme(
   displayLarge: TextStyle(
-    color: Colors.black,
-    fontSize: 36.0,
-    fontWeight: FontWeight.w700,
-  ),
-  displayMedium: TextStyle(
-    color: Colors.black,
-    fontSize: 18.0,
-  ),
-  displaySmall: TextStyle(color: Colors.indigo),
-  bodySmall: TextStyle(
-    color: Colors.grey,
-    fontSize: 18.0,
-  ),
-  bodyMedium: TextStyle(
-    color: Colors.black,
-    fontSize: 18.0,
-  ),
-  bodyLarge: TextStyle(
-    color: Colors.indigo,
-  ),
+      color: Colors.black, fontSize: 36.0, fontWeight: FontWeight.w700),
+  displayMedium: TextStyle(color: Colors.black, fontSize: 28.0),
+  displaySmall: TextStyle(color: Colors.black, fontSize: 24.0),
+  bodyLarge: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 18.0),
+  bodyMedium: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 16.0),
+  bodySmall: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 14.0),
+  labelLarge: TextStyle(color: Colors.black, fontSize: 18.0),
+  labelMedium: TextStyle(color: Colors.black, fontSize: 16.0),
+  labelSmall: TextStyle(color: Colors.black, fontSize: 14.0),
 );

@@ -143,7 +143,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }
                     },
                     child: Text('Register',
-                        style: Theme.of(context).textTheme.bodyMedium),
+                        style: Theme.of(context).textTheme.labelMedium),
                   ),
                 ],
               ),
