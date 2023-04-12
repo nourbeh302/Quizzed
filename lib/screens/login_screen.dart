@@ -3,6 +3,7 @@ import 'package:quizzed/constant.dart';
 import 'package:quizzed/models/auth.dart';
 import 'package:quizzed/validators/email_validator.dart';
 import 'package:quizzed/validators/password_validator.dart';
+import 'package:quizzed/widgets/quizzed_appbar.dart';
 // import 'package:quizzed/widgets/app_bar.dart';
 
 final _formKey = GlobalKey<FormState>();
@@ -43,15 +44,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: scaffoldColor,
-      appBar: AppBar(
-        title: Text(
-          "Login",
-          style:
-              TextStyle(fontFamily: baseFontFamily, fontSize: appBarFontSize),
-        ),
-        automaticallyImplyLeading: false,
-        elevation: 0,
+      appBar: const QuizzedAppBar(
+        title: "Login",
+        isBackButtonActive: true,
       ),
       body: Container(
           margin: const EdgeInsets.fromLTRB(0, 48, 0, 0),
@@ -131,12 +126,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     onTap: () => Navigator.pushNamed(context, '/register'),
                     child: Text(
                       'A newbie here? Create new account',
-                      style: TextStyle(
-                          fontFamily: baseFontFamily,
-                          fontSize: linkFontSize,
-                          color: primaryColor),
+                      style: TextStyle(color: primaryColor),
                     ),
-                  )
+                  ),
                 ],
               ),
               Column(
@@ -150,38 +142,16 @@ class _LoginScreenState extends State<LoginScreen> {
                         logIn();
                       }
                     },
-                    style: ButtonStyle(
-                        minimumSize: MaterialStateProperty.all(
-                            const Size.fromHeight(32)),
-                        shape: const MaterialStatePropertyAll(StadiumBorder()),
-                        padding: MaterialStateProperty.all(buttonPadding),
-                        elevation: MaterialStateProperty.all(0)),
-                    child: Text(
-                      'Login',
-                      style: TextStyle(
-                          fontSize: buttonFontSize,
-                          fontFamily: baseFontFamily,
-                          color: Colors.white),
-                    ),
+                    child: Text('Login',
+                        style: Theme.of(context).textTheme.bodyMedium),
                   ),
                   const SizedBox(
                     height: 12,
                   ),
                   OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(32),
-                      padding: buttonPadding,
-                      shape: const StadiumBorder(),
-                      side: BorderSide(width: 1, color: primaryColor),
-                    ),
                     onPressed: () => logIn(),
-                    child: Text(
-                      'Sign in as Professor',
-                      style: TextStyle(
-                          fontFamily: baseFontFamily,
-                          color: primaryColor,
-                          fontSize: buttonFontSize),
-                    ),
+                    child: Text('Sign in as Professor',
+                        style: Theme.of(context).textTheme.bodyMedium),
                   ),
                 ],
               ),

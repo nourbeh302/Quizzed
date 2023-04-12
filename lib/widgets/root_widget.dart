@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:quizzed/models/auth.dart';
+import 'package:quizzed/screens/getting_started_screen.dart';
 import 'package:quizzed/screens/home_screen.dart';
-import 'package:quizzed/screens/login_screen.dart';
 
 class RootWidget extends StatefulWidget {
   const RootWidget({super.key});
@@ -21,7 +21,7 @@ class _RootWidgetState extends State<RootWidget> {
           if (snapshot.hasData) {
             return const HomeScreen();
           } else {
-            return const LoginScreen();
+            return const GettingStartedScreen();
           }
         });
   }

@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:quizzed/constant.dart';
+import 'package:quizzed/screens/getting_started_screen.dart';
 
 import 'package:quizzed/screens/home_screen.dart';
 import 'package:quizzed/screens/login_screen.dart';
@@ -21,16 +22,22 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: primaryColor,
-          secondary: secondaryColor
-        ),
-      ),
-      darkTheme: ThemeData.dark(),
+          snackBarTheme: SnackBarThemeData(
+            backgroundColor: primaryColor,
+            contentTextStyle:
+                TextStyle(fontSize: 16, fontFamily: baseFontFamily),
+          ),
+          appBarTheme: defaultAppBarTheme,
+          elevatedButtonTheme: elevatedButtonThemeData,
+          outlinedButtonTheme: outlinedButtonThemeData,
+          fontFamily: baseFontFamily,
+          scaffoldBackgroundColor: Colors.amber.shade50,
+          textTheme: defaultTextTheme),
       title: _title,
-      initialRoute: '/login',
+      initialRoute: '/gettingStarted',
       routes: {
         '/': (context) => const HomeScreen(),
+        '/gettingStarted': (context) => const GettingStartedScreen(),
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
       },

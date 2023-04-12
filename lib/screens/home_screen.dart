@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quizzed/constant.dart';
 import 'package:quizzed/models/auth.dart';
+import 'package:quizzed/widgets/quizzed_appbar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -33,32 +34,33 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: scaffoldColor,
-      appBar: AppBar(
-        title: Text(
-          "Home",
-          style:
-              TextStyle(fontFamily: baseFontFamily, fontSize: appBarFontSize),
-        ),
-        automaticallyImplyLeading: false,
-        elevation: 0,
+      appBar: const QuizzedAppBar(
+        title: "Home",
+        isBackButtonActive: false,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Welcome ${Auth().loggedInUser?.email}'),
-            TextButton(
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Welcome ${Auth().loggedInUser?.email}'),
+              const SizedBox(
+                height: 16,
+              ),
+              OutlinedButton(
                 onPressed: () => signOut(),
-                child: Text(
-                  "Sign out",
-                  style: TextStyle(fontFamily: baseFontFamily),
-                ))
-          ],
+                child: Text('Sign out',
+                    style: Theme.of(context).textTheme.bodyMedium),
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: primaryColor,
+        showUnselectedLabels: true,
+        unselectedItemColor: primaryColor,
         items: [
           BottomNavigationBarItem(
               icon: SvgPicture.asset(

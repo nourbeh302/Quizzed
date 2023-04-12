@@ -3,6 +3,7 @@ import 'package:quizzed/constant.dart';
 import 'package:quizzed/models/auth.dart';
 import 'package:quizzed/validators/email_validator.dart';
 import 'package:quizzed/validators/password_validator.dart';
+import 'package:quizzed/widgets/quizzed_appbar.dart';
 // import 'package:quizzed/widgets/app_bar.dart';
 
 final _formKey = GlobalKey<FormState>();
@@ -43,15 +44,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: scaffoldColor,
-      appBar: AppBar(
-        title: Text(
-          "Register",
-          style:
-              TextStyle(fontFamily: baseFontFamily, fontSize: appBarFontSize),
-        ),
-        backgroundColor: primaryColor,
-        elevation: 0,
+      appBar: const QuizzedAppBar(
+        title: "Register",
+        isBackButtonActive: true,
       ),
       body: Container(
           margin: const EdgeInsets.fromLTRB(0, 48, 0, 0),
@@ -131,12 +126,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onTap: () => Navigator.pushNamed(context, '/login'),
                     child: Text(
                       'Already have account? Sign in',
-                      style: TextStyle(
-                          fontFamily: baseFontFamily,
-                          fontSize: linkFontSize,
-                          color: primaryColor),
+                      style: TextStyle(color: primaryColor),
                     ),
-                  )
+                  ),
                 ],
               ),
               Column(
@@ -150,20 +142,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         register();
                       }
                     },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(primaryColor),
-                      minimumSize:
-                          MaterialStateProperty.all(const Size.fromHeight(32)),
-                      shape: const MaterialStatePropertyAll(StadiumBorder()),
-                      padding: MaterialStateProperty.all(buttonPadding),
-                    ),
-                    child: Text(
-                      'Register',
-                      style: TextStyle(
-                          fontSize: buttonFontSize,
-                          fontFamily: baseFontFamily,
-                          color: Colors.white),
-                    ),
+                    child: Text('Register',
+                        style: Theme.of(context).textTheme.bodyMedium),
                   ),
                 ],
               ),
