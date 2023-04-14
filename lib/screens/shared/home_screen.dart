@@ -38,16 +38,24 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Welcome ${Auth().loggedInUser?.email}',
+                  'Welcome ${Auth().loggedInUser?.email ?? 'Professor'}',
                   style: Theme.of(context).textTheme.displaySmall,
                   textAlign: TextAlign.center,
+                ),
+                const SizedBox(
+                  height: 32,
+                ),
+                OutlinedButton(
+                  onPressed: () => signOut(),
+                  child: Text('Sign out',
+                      style: Theme.of(context).textTheme.labelMedium),
                 ),
                 const SizedBox(
                   height: 16,
                 ),
                 OutlinedButton(
-                  onPressed: () => signOut(),
-                  child: Text('Sign out',
+                  onPressed: () => Navigator.pushNamed(context, '/courses'),
+                  child: Text('Add new course',
                       style: Theme.of(context).textTheme.labelMedium),
                 ),
               ],

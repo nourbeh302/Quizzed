@@ -1,11 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:quizzed/constant.dart';
-import 'package:quizzed/screens/getting_started_screen.dart';
+import 'package:quizzed/screens/professor/add_course_screen.dart';
+import 'package:quizzed/screens/shared/getting_started_screen.dart';
 
-import 'package:quizzed/screens/home_screen.dart';
-import 'package:quizzed/screens/login_screen.dart';
-import 'package:quizzed/screens/register_screen.dart';
+import 'package:quizzed/screens/shared/home_screen.dart';
+import 'package:quizzed/screens/shared/login_screen.dart';
+import 'package:quizzed/screens/student/register_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         '/gettingStarted': (context) => const GettingStartedScreen(),
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
+        '/courses': (context) => const AddCourseScreen(),
       },
       debugShowCheckedModeBanner: false,
     );

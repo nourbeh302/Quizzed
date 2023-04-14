@@ -164,7 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 12,
                   ),
                   OutlinedButton(
-                    onPressed: () => logIn(),
+                    onPressed: () => Navigator.pushNamed(context, '/'),
                     child: Text('Sign in as Professor',
                         style: Theme.of(context).textTheme.labelMedium),
                   ),

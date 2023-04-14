@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Auth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  // final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   User? get loggedInUser => _firebaseAuth.currentUser;
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
 
@@ -35,33 +36,21 @@ class Auth {
     }
   }
 
+  // Creates student in Firebase Auth
   Future<void> register(
       {required String email, required String password}) async {
     await _firebaseAuth.createUserWithEmailAndPassword(
         email: email, password: password);
+    await addStudentToStorage(email);
   }
-  // For creating users in firestore
 
-  /* void createUserInFirestore(user) {
-  // Get a reference to the Firestore collection
-  const usersCollection = .firestore().collection('users');
-
-  // Create a new document with the user's UID as the document ID
-  usersCollection.doc(user.uid).set({
-    email: user.email,
-    displayName: user.displayName,
-    photoURL: user.photoURL,
-    // Add any other user data you want to store in Firestore
-  })
-  .then(() => {
-    print('User created in Firestore:', user.uid);
-  })
-  .catch((e) => {
-    print('Error creating user in Firestore:', e);
-  });
-} */
-
-  Future<void> signOut() async {
-    await _firebaseAuth.signOut();
+  // Creates student document in Firestore
+  Future<void> addStudentToStorage(String email) async {
+    await _firebaseFirestore
+        .collection('Users') // Targets the collection
+        .doc(loggedInUser!.uid)
+        .set({'email': email}); // Adds the document
   }
+
+  Future<void> signOut() async => await _firebaseAuth.signOut();
 }

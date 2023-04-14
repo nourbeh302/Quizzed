@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:quizzed/models/auth.dart';
-import 'package:quizzed/screens/getting_started_screen.dart';
-import 'package:quizzed/screens/home_screen.dart';
+import 'package:quizzed/screens/shared/getting_started_screen.dart';
+import 'package:quizzed/screens/shared/home_screen.dart';
 
 class RootWidget extends StatefulWidget {
   const RootWidget({super.key});
