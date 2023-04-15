@@ -1,7 +1,7 @@
 class Course {
-  String cuid;
+  String cuid = '';
   String name;
   String image;
 
-  Course(this.cuid, this.name, this.image);
+  Course(this.name, this.image);
 }

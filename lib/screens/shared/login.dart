@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:quizzed/constant.dart';
 import 'package:quizzed/models/auth.dart';
+import 'package:quizzed/services/auth_service.dart';
 import 'package:quizzed/validators/email_validator.dart';
 import 'package:quizzed/validators/password_validator.dart';
-import 'package:quizzed/widgets/quizzed_appbar.dart';
+import 'package:quizzed/widgets/appbar.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -21,20 +22,19 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailValidator = EmailValidator();
   final _passwordValidator = PasswordValidator();
 
+  // Define services
+  final AuthService _authService = AuthService();
+
   Future<void> logIn() async {
-    String result = await Auth().logIn(
-        email: _emailController.text, password: _passwordController.text);
+    Student student = Student(_emailController.text, _passwordController.text);
+    String? result = await _authService.logIn(student);
 
-    if (result == 'Success') {
-      navigateToHomeScreen();
-    } else {
-      showErrorDialog(result);
-    }
+    return result == 'Success'
+        ? navigateToHomeScreen()
+        : showErrorDialog(result!);
   }
 
-  void navigateToHomeScreen() {
-    Navigator.pushNamed(context, '/');
-  }
+  void navigateToHomeScreen() => Navigator.pushNamed(context, '/');
 
   void showErrorDialog(String error) {
     showDialog(

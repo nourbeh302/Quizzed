@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:quizzed/models/auth.dart';
-import 'package:quizzed/widgets/quizzed_appbar.dart';
-import 'package:quizzed/widgets/quizzed_navbar.dart';
+import 'package:quizzed/services/auth_service.dart';
+import 'package:quizzed/widgets/appbar.dart';
+import 'package:quizzed/widgets/navbar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,16 +12,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final User? loggedInUser = Auth().loggedInUser;
+  final AuthService _authService = AuthService();
+  final User? loggedInUser = AuthService().loggedInUser;
 
   Future<void> signOut() async {
-    await Auth().signOut();
-    navigateToGettingStartedScreen();
+    await _authService.signOut();
+    navigateToWelcomeScreen();
   }
 
-  void navigateToGettingStartedScreen() {
+  void navigateToWelcomeScreen() {
     Navigator.pushNamedAndRemoveUntil(
-        context, '/gettingStarted', (route) => false);
+        context, '/Welcome', (route) => false);
   }
 
   @override
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Welcome ${Auth().loggedInUser?.email ?? 'Professor'}',
+                  'Welcome ${loggedInUser?.email ?? 'Professor'}',
                   style: Theme.of(context).textTheme.displaySmall,
                   textAlign: TextAlign.center,
                 ),
@@ -54,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 16,
                 ),
                 OutlinedButton(
-                  onPressed: () => Navigator.pushNamed(context, '/courses'),
+                  onPressed: () => Navigator.pushNamed(context, '/addCourse'),
                   child: Text('Add new course',
                       style: Theme.of(context).textTheme.labelMedium),
                 ),

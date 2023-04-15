@@ -12,8 +12,16 @@ class QuizzedNavbar extends StatefulWidget {
 class _QuizzedNavbarState extends State<QuizzedNavbar> {
   int _selectedIndex = 0;
 
+  var routes = [
+    '/', 
+    '/courses', 
+    '/monitor', 
+    '/profile'
+  ];
+
   void _onItemTapped(int index) {
     setState(() => _selectedIndex = index);
+    Navigator.pushNamed(context, routes[index]);
   }
 
   @override
@@ -24,20 +32,21 @@ class _QuizzedNavbarState extends State<QuizzedNavbar> {
       unselectedItemColor: primaryColor,
       items: [
         BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'assets/icons/home.svg',
-              width: 24,
-              height: 24,
-              colorFilter: ColorFilter.mode(primaryColor, BlendMode.srcIn),
-            ),
-            label: "Home",
-            backgroundColor: scaffoldColor,
-            activeIcon: SvgPicture.asset(
-              'assets/icons/home-1.svg',
-              width: 24,
-              height: 24,
-              colorFilter: ColorFilter.mode(primaryColor, BlendMode.srcIn),
-            )),
+          icon: SvgPicture.asset(
+            'assets/icons/home.svg',
+            width: 24,
+            height: 24,
+            colorFilter: ColorFilter.mode(primaryColor, BlendMode.srcIn),
+          ),
+          label: "Home",
+          backgroundColor: scaffoldColor,
+          activeIcon: SvgPicture.asset(
+            'assets/icons/home-1.svg',
+            width: 24,
+            height: 24,
+            colorFilter: ColorFilter.mode(primaryColor, BlendMode.srcIn),
+          ),
+        ),
         BottomNavigationBarItem(
             icon: SvgPicture.asset(
               'assets/icons/bookmark.svg',
