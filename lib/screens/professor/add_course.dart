@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:quizzed/constant.dart';
+import 'package:quizzed/models/course.dart';
 import 'package:quizzed/validators/name_validator.dart';
 import 'package:quizzed/widgets/appbar.dart';
 import 'package:quizzed/services/course_service.dart';
-import 'package:quizzed/widgets/navbar.dart';
+// import 'package:quizzed/widgets/navbar.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -122,16 +123,6 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
-                InkWell(
-                  onTap: () => Navigator.pushNamed(context, '/register'),
-                  child: Text(
-                    'A newbie here? Create new account',
-                    style: TextStyle(color: primaryColor),
-                  ),
-                ),
               ],
             ),
             Column(
@@ -142,8 +133,8 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Processing Data')),
                       );
-                      _courseService.addCourse(
-                          _nameController.text, _imageController.text);
+                      Course course = Course(_nameController.text, _imageController.text);
+                      _courseService.addCourse(course);
                     }
                     Navigator.pushNamedAndRemoveUntil(
                         context, '/', (route) => false);
@@ -156,7 +147,7 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: const QuizzedNavbar(),
+      // bottomNavigationBar: const QuizzedNavbar(),
     );
   }
 }

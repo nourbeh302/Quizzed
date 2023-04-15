@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quizzed/services/auth_service.dart';
 import 'package:quizzed/widgets/appbar.dart';
-import 'package:quizzed/widgets/navbar.dart';
+// import 'package:quizzed/widgets/navbar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -55,6 +55,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 16,
                 ),
                 OutlinedButton(
+                  onPressed: () => Navigator.pushNamed(context, '/courses'),
+                  child: Text('View courses',
+                      style: Theme.of(context).textTheme.labelMedium),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                OutlinedButton(
                   onPressed: () => Navigator.pushNamed(context, '/addCourse'),
                   child: Text('Add new course',
                       style: Theme.of(context).textTheme.labelMedium),
@@ -63,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: const QuizzedNavbar());
+        // bottomNavigationBar: const QuizzedNavbar()
+      );
   }
 }
