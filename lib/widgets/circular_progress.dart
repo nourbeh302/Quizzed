@@ -5,9 +5,11 @@ class CircularProgress extends StatelessWidget {
   const CircularProgress({super.key});
 
   @override
-  Widget build(BuildContext context) => CircularProgressIndicator(
-        backgroundColor: primaryColor,
-        valueColor: AlwaysStoppedAnimation(secondaryColor),
-        strokeWidth: 3,
-      );
+  Widget build(BuildContext context) {
+    return CircularProgressIndicator(
+      backgroundColor: primaryColor,
+      valueColor: AlwaysStoppedAnimation(scaffoldColor),
+      strokeWidth: 3,
+    );
+  }
 }

@@ -72,8 +72,8 @@ AppBarTheme defaultAppBarTheme = AppBarTheme(
 TextTheme defaultTextTheme = const TextTheme(
   displayLarge: TextStyle(
       color: Colors.black, fontSize: 36.0, fontWeight: FontWeight.w700),
-  displayMedium: TextStyle(color: Colors.black, fontSize: 28.0),
-  displaySmall: TextStyle(color: Colors.black, fontSize: 24.0),
+  displayMedium: TextStyle(color: Colors.black, fontSize: 28.0, fontWeight: FontWeight.w700),
+  displaySmall: TextStyle(color: Colors.black, fontSize: 24.0, fontWeight: FontWeight.w700),
   bodyLarge: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 18.0),
   bodyMedium: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 16.0),
   bodySmall: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 14.0),

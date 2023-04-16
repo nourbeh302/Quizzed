@@ -39,7 +39,7 @@ class _QuizzedNavbarState extends State<QuizzedNavbar> {
             colorFilter: ColorFilter.mode(primaryColor, BlendMode.srcIn),
           ),
           label: "Home",
-          backgroundColor: scaffoldColor,
+          backgroundColor: Colors.amber.shade50,
           activeIcon: SvgPicture.asset(
             'assets/icons/home-1.svg',
             width: 24,

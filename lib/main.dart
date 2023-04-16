@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
             backgroundColor: primaryColor,
             contentTextStyle:
                 TextStyle(fontSize: 16, fontFamily: baseFontFamily),
-          ),
+        ),
           appBarTheme: defaultAppBarTheme,
           elevatedButtonTheme: elevatedButtonThemeData,
           outlinedButtonTheme: outlinedButtonThemeData,

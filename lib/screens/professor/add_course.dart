@@ -5,7 +5,6 @@ import 'package:quizzed/models/course.dart';
 import 'package:quizzed/validators/name_validator.dart';
 import 'package:quizzed/widgets/appbar.dart';
 import 'package:quizzed/services/course_service.dart';
-// import 'package:quizzed/widgets/navbar.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -134,11 +133,11 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Processing Data')),
                       );
-                      Course course = Course(_nameController.text, _imageController.text, Timestamp.now());
+                      Course course = Course(_nameController.text,
+                          _imageController.text, Timestamp.now());
                       _courseService.addCourse(course);
                     }
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, '/', (route) => false);
+                    Navigator.pushNamed(context, '/');
                   },
                   child: Text('Add Course',
                       style: Theme.of(context).textTheme.labelMedium),
@@ -148,7 +147,6 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
           ],
         ),
       ),
-      // bottomNavigationBar: const QuizzedNavbar(),
     );
   }
 }
