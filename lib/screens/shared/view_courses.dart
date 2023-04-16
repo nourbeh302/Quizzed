@@ -41,7 +41,19 @@ class _ViewCoursesScreenState extends State<ViewCoursesScreen> {
                   courseList.add(singleCourse);
                 }
                 return courses.isNotEmpty
-                    ? ListView(children: courseList)
+                    ? Container(
+                        margin: const EdgeInsets.symmetric(vertical: 8.0),
+                        padding: const EdgeInsets.all(16.0),
+                        child: ListView.separated(
+                          itemCount: courseList.length,
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: 16.0,
+                          ),
+                          itemBuilder: (BuildContext context, int index) {
+                            return courseList[index];
+                          },
+                        ),
+                      )
                     : const Text('No courses were found. Try adding some');
               } else {
                 return const CircularProgress();
