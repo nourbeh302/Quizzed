@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quizzed/constant.dart';
 import 'package:quizzed/models/course.dart';
@@ -133,7 +134,7 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('Processing Data')),
                       );
-                      Course course = Course(_nameController.text, _imageController.text);
+                      Course course = Course(_nameController.text, _imageController.text, Timestamp.now());
                       _courseService.addCourse(course);
                     }
                     Navigator.pushNamedAndRemoveUntil(

@@ -10,9 +10,9 @@ class CourseService {
       final snapshot =
           await _firebaseFirestore.collection(_collectionName).get();
       final courses = snapshot.docs
-          .map((doc) => Course(doc.data()['name'], doc.data()['image']))
+          .map((doc) => Course(
+              doc.data()['name'], doc.data()['image'], doc.data()['createdAt']))
           .toList();
-
       return courses;
     } catch (e) {
       throw Error();

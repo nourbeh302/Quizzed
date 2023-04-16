@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:quizzed/constant.dart';
 import 'package:quizzed/screens/professor/add_course.dart';
-import 'package:quizzed/screens/professor/view_courses.dart';
+import 'package:quizzed/screens/shared/view_courses.dart';
 import 'package:quizzed/screens/shared/welcome.dart';
 
 import 'package:quizzed/screens/shared/home.dart';

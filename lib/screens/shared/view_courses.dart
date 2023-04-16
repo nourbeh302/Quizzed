@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quizzed/models/course.dart';
 import 'package:quizzed/services/course_service.dart';
@@ -16,8 +17,19 @@ class _ViewCoursesScreenState extends State<ViewCoursesScreen> {
   late Future<List<Course>> courses;
   CourseService courseService = CourseService();
 
-  Future<List<Course>> getCourses() async {
-    return courses = await Future.value(courseService.getCourses());
+  Future<List<Course>> getCourses() async =>
+      courses = await Future.value(courseService.getCourses());
+
+  String convertDateToText(Timestamp timestamp) {
+    var date = timestamp.toDate();
+    var day = date.day < 10 ? '0${date.day}' : date.day;
+    var month = date.month < 10 ? '0${date.month}' : date.month;
+    var year = date.year;
+    var hour = date.hour < 10 ? '0${date.hour}' : date.hour;
+    var minute = date.minute < 10 ? '0${date.minute}' : date.minute;
+    var morningOrNight = date.hour > 12 ? 'PM' : 'AM';
+
+    return '$day/$month/$year $hour:$minute $morningOrNight';
   }
 
   @override
@@ -29,14 +41,18 @@ class _ViewCoursesScreenState extends State<ViewCoursesScreen> {
           future: getCourses(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) return const CircularProgress();
-            if (snapshot.data!.isEmpty) return const Text('No courses were found. Try adding some');
+            if (snapshot.data!.isEmpty) {
+              return const Text('No courses were found. Try adding some');
+            }
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
                 final course = snapshot.data![index];
                 return ListTile(
-                  title: Text(course.name),
-                  subtitle: Text('Created at: ${course.createdAt.hour}:${course.createdAt.minute} ${course.createdAt.day}/${course.createdAt.month}/${course.createdAt.year}'),
+                  title: Text(course.name,
+                      style: Theme.of(context).textTheme.labelLarge),
+                  subtitle:
+                      Text('Created at: ${convertDateToText(course.createdAt)}'),
                 );
               },
             );
