@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:quizzed/constant.dart';
 import 'package:quizzed/models/course.dart';
 
 class CourseCard extends StatefulWidget {
@@ -26,17 +25,43 @@ class _CourseCardState extends State<CourseCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        border: Border.all(color: primaryColor, width: 1.2),
-        borderRadius: const BorderRadius.all(Radius.circular(4.0))
-      ),
+    return ClipRRect(
+      borderRadius: const BorderRadius.all(Radius.circular(4.0)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.course.name, style: Theme.of(context).textTheme.displaySmall,),
-          Text(convertDateToText(widget.course.createdAt))
+          Image.network(widget.course.image),
+          Container(
+              color: Colors.white,
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.course.name,
+                    style: Theme.of(context).textTheme.displaySmall,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    convertDateToText(widget.course.createdAt),
+                  ),
+                  const SizedBox(height: 24),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: OutlinedButton(
+                          onPressed: null,
+                          child: Text('View course',
+                              style: Theme.of(context).textTheme.labelMedium),
+                        ),
+                      ),
+                      const Expanded(
+                          flex: 1, child: SizedBox()), // Empty row slot
+                    ],
+                  )
+                ],
+              ))
         ],
       ),
     );

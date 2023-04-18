@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
 import 'package:quizzed/models/course.dart';
 import 'package:quizzed/services/course_service.dart';
 import 'package:quizzed/widgets/appbar.dart';
@@ -47,7 +48,7 @@ class _ViewCoursesScreenState extends State<ViewCoursesScreen> {
                         child: ListView.separated(
                           itemCount: courseList.length,
                           separatorBuilder: (context, index) => const SizedBox(
-                            height: 16.0,
+                            height: 24.0,
                           ),
                           itemBuilder: (BuildContext context, int index) {
                             return courseList[index];
