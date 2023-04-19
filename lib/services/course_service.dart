@@ -1,14 +1,16 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:quizzed/models/course.dart';
 
 class CourseService {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   final String _collectionName = 'Courses';
-  PlatformFile? pickedFile;
+  final Reference _ref =
+        FirebaseStorage.instanceFor(bucket: 'gs://quizzed-69c4e.appspot.com')
+            .ref();
 
   Stream<QuerySnapshot> getCourses() =>
       _firebaseFirestore.collection(_collectionName).snapshots();
@@ -21,21 +23,24 @@ class CourseService {
     });
   }
 
-  Future<PlatformFile?> selectImage() async {
-    final result = await FilePicker.platform.pickFiles();
+  Future<File?> selectImageFromCameraRoll() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.camera);
 
-    return result?.files.first;
+    return File(image!.path);
   }
 
-  Future<String> uploadImage(PlatformFile? pickedImage) async {
-    final path = 'media/${pickedImage!.name}';
-    final image = File(pickedImage.path!);
+  Future<File?> selectImageFromGallery() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
-    final ref =
-        FirebaseStorage.instanceFor(bucket: 'gs://quizzed-69c4e.appspot.com')
-            .ref()
-            .child(path);
-    Task uploadTask = ref.putFile(image);
+    return File(image!.path);
+  }
+
+  Future<String> uploadImage(File? pickedImage) async {
+    final String bucket = 'media/${pickedImage!.path}';
+    final File image = File(pickedImage.path);
+    final Task uploadTask = _ref.child(bucket).putFile(image);
 
     final snapshot = await uploadTask.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
