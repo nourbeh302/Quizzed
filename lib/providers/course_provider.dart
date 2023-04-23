@@ -2,25 +2,35 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:quizzed/models/course.dart';
 
-class CourseService {
-  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  final String _collectionName = 'Courses';
+class CourseProvider with ChangeNotifier {
+  final FirebaseFirestore _db = FirebaseFirestore.instance;
   final Reference _ref =
-        FirebaseStorage.instanceFor(bucket: 'gs://quizzed-69c4e.appspot.com')
-            .ref();
+      FirebaseStorage.instanceFor(bucket: 'gs://quizzed-69c4e.appspot.com')
+          .ref();
+  final List<Course> _courses = [];
 
-  Stream<QuerySnapshot> getCourses() =>
-      _firebaseFirestore.collection(_collectionName).snapshots();
+  List<Course> get courses => _courses;
+
+  Stream<List<Course>> getAllCourses() {
+    return _db.collection('Courses').snapshots().map((snapshot) =>
+        snapshot.docs.map((doc) => Course.fromSnapshot(doc)).toList());
+  }
 
   Future<void> addCourse(Course course) async {
-    await _firebaseFirestore.collection(_collectionName).add({
-      'name': course.name,
-      'image': course.image,
-      'createdAt': course.createdAt
-    });
+    try {
+      await _db.collection('Courses').add({
+        'name': course.name,
+        'imageUrl': course.imageUrl,
+        'createdAt': course.createdAt
+      });
+      notifyListeners();
+    } catch (error) {
+      return;
+    }
   }
 
   Future<File?> selectImageFromCameraRoll() async {
@@ -34,17 +44,19 @@ class CourseService {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
+    notifyListeners();
     return File(image!.path);
   }
 
-  Future<String> uploadImage(File? pickedImage) async {
-    final String bucket = 'media/${pickedImage!.path}';
+  Future<String> uploadImage(File pickedImage) async {
+    final String bucket = 'media/${pickedImage.path.split('/').last}';
     final File image = File(pickedImage.path);
     final Task uploadTask = _ref.child(bucket).putFile(image);
 
     final snapshot = await uploadTask.whenComplete(() {});
     final urlDownload = await snapshot.ref.getDownloadURL();
 
+    notifyListeners();
     return urlDownload;
   }
 }

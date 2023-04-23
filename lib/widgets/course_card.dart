@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
+
 import 'package:flutter/material.dart';
 import 'package:quizzed/models/course.dart';
 
@@ -11,16 +13,10 @@ class CourseCard extends StatefulWidget {
 }
 
 class _CourseCardState extends State<CourseCard> {
-  String convertDateToText(Timestamp timestamp) {
-    var date = timestamp.toDate();
-    var day = date.day < 10 ? '0${date.day}' : date.day;
-    var month = date.month < 10 ? '0${date.month}' : date.month;
-    var year = date.year;
-    var hour = date.hour < 10 ? '0${date.hour}' : date.hour;
-    var minute = date.minute < 10 ? '0${date.minute}' : date.minute;
-    var morningOrNight = date.hour > 12 ? 'PM' : 'AM';
-
-    return '$day/$month/$year $hour:$minute $morningOrNight';
+  String timestampToDateTime(Timestamp timestamp) {
+    final date = timestamp.toDate();
+    final formattedDate = DateFormat('dd/MM/yyyy hh:mm a').format(date);
+    return formattedDate;
   }
 
   @override
@@ -30,7 +26,12 @@ class _CourseCardState extends State<CourseCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.network(widget.course.image),
+          Image.network(
+            widget.course.imageUrl,
+            height: 200,
+            width: double.infinity,
+            fit: BoxFit.cover,
+          ),
           Container(
               color: Colors.white,
               padding: const EdgeInsets.all(16.0),
@@ -43,7 +44,7 @@ class _CourseCardState extends State<CourseCard> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    convertDateToText(widget.course.createdAt),
+                    timestampToDateTime(widget.course.createdAt),
                   ),
                   const SizedBox(height: 24),
                   Row(

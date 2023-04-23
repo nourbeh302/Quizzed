@@ -1,66 +1,72 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import 'package:quizzed/models/course.dart';
-import 'package:quizzed/services/course_service.dart';
-import 'package:quizzed/widgets/appbar.dart';
+import 'package:quizzed/providers/course_provider.dart';
 import 'package:quizzed/widgets/circular_progress.dart';
 import 'package:quizzed/widgets/course_card.dart';
 
-class ViewCoursesScreen extends StatefulWidget {
+class ViewCoursesScreen extends StatelessWidget {
   const ViewCoursesScreen({super.key});
 
   @override
-  State<ViewCoursesScreen> createState() => _ViewCoursesScreenState();
-}
-
-class _ViewCoursesScreenState extends State<ViewCoursesScreen> {
-  CourseService courseService = CourseService();
-
-  dynamic getCourses() => courseService.getCourses();
-
-  Course convertDocumentSnapshotToCourse(
-      QueryDocumentSnapshot<Object?> snapshot) {
-    final data = snapshot.data() as Map<String, dynamic>;
-    return Course(data['name'], data['image'], data['createdAt']);
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const QuizzedAppBar(title: 'Courses', isBackButtonActive: true),
-      body: Center(
-        child: StreamBuilder<QuerySnapshot>(
-            stream: getCourses(),
-            builder: (context, snapshot) {
-              List<Widget> courseList = [];
-              if (snapshot.hasData) {
-                final courses = snapshot.data?.docs.toList();
-                for (var course in courses!) {
-                  var singleCourse = CourseCard(
-                      course: convertDocumentSnapshotToCourse(course));
-                  courseList.add(singleCourse);
-                }
-                return courses.isNotEmpty
-                    ? Container(
-                        margin: const EdgeInsets.symmetric(vertical: 8.0),
-                        padding: const EdgeInsets.all(16.0),
-                        child: ListView.separated(
-                          itemCount: courseList.length,
-                          separatorBuilder: (context, index) => const SizedBox(
-                            height: 24.0,
-                          ),
-                          itemBuilder: (BuildContext context, int index) {
-                            return courseList[index];
-                          },
-                        ),
-                      )
-                    : const Text('No courses were found. Try adding some');
-              } else {
-                return const CircularProgress();
-              }
-            }),
-      ),
+    final courses = Provider.of<CourseProvider>(context).getAllCourses();
+
+    return StreamBuilder<List<Course>>(
+      stream: courses,
+      builder: (context, snapshot) {
+        List<Widget> coursesColumn = [];
+        if (snapshot.hasError) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Courses'),
+            ),
+            body: Center(
+              child: Text('Error: ${snapshot.error}'),
+            ),
+          );
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Courses'),
+            ),
+            body: const Center(
+              child: CircularProgress(),
+            ),
+          );
+        }
+
+        final courses = snapshot.data!;
+        for (var course in courses) {
+          var singleCourse = CourseCard(course: course);
+          coursesColumn.add(singleCourse);
+        }
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text('Courses'),
+          ),
+          body: courses.isNotEmpty
+              ? Container(
+                  margin: const EdgeInsets.symmetric(vertical: 8.0),
+                  padding: const EdgeInsets.all(16.0),
+                  child: ListView.separated(
+                    itemCount: coursesColumn.length,
+                    separatorBuilder: (context, index) => const SizedBox(
+                      height: 24.0,
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      return coursesColumn[index];
+                    },
+                  ),
+                )
+              : const Center(
+                  child: Text('No courses are available now'),
+                ),
+        );
+      },
     );
   }
 }

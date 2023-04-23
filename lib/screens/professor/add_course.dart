@@ -5,9 +5,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:quizzed/constant.dart';
 import 'package:quizzed/models/course.dart';
+import 'package:quizzed/providers/course_provider.dart';
 import 'package:quizzed/validators/name_validator.dart';
 import 'package:quizzed/widgets/appbar.dart';
-import 'package:quizzed/services/course_service.dart';
+// import 'package:provider/provider.dart';
+
+// import 'package:quizzed/services/course_service.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -27,8 +30,8 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
   // Define image file
   File? pickedImage;
 
-  // Define service
-  final CourseService _courseService = CourseService();
+  // Define provider
+  final courseProvider = CourseProvider();
 
   void showErrorDialog(String error) {
     showDialog(
@@ -51,19 +54,19 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
   }
 
   Future<void> selectImageFromGallery() async {
-    final result = await _courseService.selectImageFromGallery();
+    final result = await courseProvider.selectImageFromGallery();
     setState(() => pickedImage = result);
   }
 
   Future<void> selectImageFromCameraRoll() async {
-    final result = await _courseService.selectImageFromCameraRoll();
+    final result = await courseProvider.selectImageFromCameraRoll();
     setState(() => pickedImage = result);
   }
 
   Future<void> uploadImage(pickedImage) async {
-    String downloadUrl = await _courseService.uploadImage(pickedImage);
+    String downloadUrl = await courseProvider.uploadImage(pickedImage);
     Course course = Course(_nameController.text, downloadUrl, Timestamp.now());
-    _courseService.addCourse(course);
+    courseProvider.addCourse(course);
   }
 
   @override
@@ -123,6 +126,7 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
                             File(pickedImage!.path),
                             fit: BoxFit.cover,
                             width: double.infinity,
+                            height: 200
                           ),
                         ),
                     ],
