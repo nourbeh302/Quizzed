@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:quizzed/services/auth_service.dart';
+import 'package:quizzed/providers/auth_provider.dart';
 import 'package:quizzed/widgets/appbar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,11 +11,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final AuthService _authService = AuthService();
-  final User? loggedInUser = AuthService().loggedInUser;
+  final AuthProvider _authProvider = AuthProvider();
+  final User? loggedInUser = AuthProvider().loggedInUser;
 
   Future<void> signOut() async {
-    await _authService.signOut();
+    await _authProvider.signOut();
     navigateToWelcomeScreen();
   }
 

@@ -52,7 +52,7 @@ class _CourseCardState extends State<CourseCard> {
                       Expanded(
                         flex: 1,
                         child: OutlinedButton(
-                          onPressed: null,
+                          onPressed: () => Navigator.pushNamed(context, '/course', arguments: widget.course.cuid),
                           child: Text('View course',
                               style: Theme.of(context).textTheme.labelMedium),
                         ),

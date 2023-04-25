@@ -21,7 +21,7 @@ double buttonFontSize = 16.0;
 double linkFontSize = 14.5;
 double errorFontSize = 14.5;
 
-String baseFontFamily = 'MabryPro';
+String baseFontFamily = 'Roobert';
 // ----------------
 
 OutlinedButtonThemeData outlinedButtonThemeData = OutlinedButtonThemeData(
@@ -74,10 +74,10 @@ TextTheme defaultTextTheme = const TextTheme(
       color: Colors.black, fontSize: 36.0, fontWeight: FontWeight.w700),
   displayMedium: TextStyle(color: Colors.black, fontSize: 28.0, fontWeight: FontWeight.w700),
   displaySmall: TextStyle(color: Colors.black, fontSize: 24.0, fontWeight: FontWeight.w700),
-  bodyLarge: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 18.0),
-  bodyMedium: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 16.0),
-  bodySmall: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 14.0),
-  labelLarge: TextStyle(color: Colors.black, fontSize: 18.0),
-  labelMedium: TextStyle(color: Colors.black, fontSize: 16.0),
-  labelSmall: TextStyle(color: Colors.black, fontSize: 14.0),
+  bodyLarge: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 18.0, fontWeight: FontWeight.w500),
+  bodyMedium: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 16.0, fontWeight: FontWeight.w500),
+  bodySmall: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 14.0, fontWeight: FontWeight.w500),
+  labelLarge: TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.w500),
+  labelMedium: TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.w500),
+  labelSmall: TextStyle(color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.w500),
 );

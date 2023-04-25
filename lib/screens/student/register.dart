@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:quizzed/constant.dart';
 import 'package:quizzed/models/auth.dart';
-import 'package:quizzed/services/auth_service.dart';
+import 'package:quizzed/providers/auth_provider.dart';
 import 'package:quizzed/validators/email_validator.dart';
 import 'package:quizzed/validators/password_validator.dart';
 import 'package:quizzed/widgets/appbar.dart';
-// import 'package:quizzed/widgets/app_bar.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -24,11 +23,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _passwordValidator = PasswordValidator();
 
   // Define services
-  final AuthService _authService = AuthService(); 
+  final AuthProvider _authProvider = AuthProvider(); 
 
   Future<void> register() async {
     Student student = Student(_emailController.text, _passwordController.text);
-    await _authService.register(student);
+    await _authProvider.register(student);
     navigateToHomeScreen();
   }
 

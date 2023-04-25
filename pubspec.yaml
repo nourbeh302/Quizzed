@@ -90,15 +90,20 @@ flutter:
     #     - asset: fonts/HelveticaNeueLT_Roman.otf
         # - asset: fonts/Helvetica-Italic.ttf
         #   style: italic
-    - family: MabryPro
+    - family: Roobert
       fonts:
-        - asset: fonts/MabryPro-Regular.ttf
-        - asset: fonts/MabryPro-Light.ttf
+        - asset: fonts/RoobertLight.woff
           weight: 300
-        - asset: fonts/MabryPro-Bold.ttf
+        - asset: fonts/RoobertRegular.woff
+          weight: 400
+        - asset: fonts/RoobertMedium.woff
+          weight: 500
+        - asset: fonts/RoobertSemiBold.woff
+          weight: 600
+        - asset: fonts/RoobertBold.woff
           weight: 700
-        - asset: fonts/MabryPro-Black.ttf
-          weight: 900
+        - asset: fonts/RoobertHeavy.woff
+          weight: 800
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

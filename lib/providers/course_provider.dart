@@ -1,62 +1,53 @@
-import 'dart:io';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:quizzed/models/course.dart';
 
 class CourseProvider with ChangeNotifier {
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
-  final Reference _ref =
-      FirebaseStorage.instanceFor(bucket: 'gs://quizzed-69c4e.appspot.com')
-          .ref();
-  final List<Course> _courses = [];
+  final _coursesCollection = FirebaseFirestore.instance.collection('Courses');
 
+  List<Course> _courses = [];
   List<Course> get courses => _courses;
 
-  Stream<List<Course>> getAllCourses() {
-    return _db.collection('Courses').snapshots().map((snapshot) =>
-        snapshot.docs.map((doc) => Course.fromSnapshot(doc)).toList());
+  Stream<List<Course>> get coursesStream =>
+      _coursesCollection.snapshots().map((snapshot) {
+        return snapshot.docs.map((doc) {
+          final data = doc.data();
+          return Course(
+            cuid: doc.id,
+            name: data['name'],
+            imageUrl: data['imageUrl'],
+            createdAt: data['createdAt'],
+          );
+        }).toList();
+      });
+
+  void setCourses(List<Course> courses) {
+    _courses = courses;
+    notifyListeners();
+  }
+
+  Course getSingleCourse(String cuid) {
+    return courses.firstWhere((course) => course.cuid == cuid);
   }
 
   Future<void> addCourse(Course course) async {
     try {
-      await _db.collection('Courses').add({
+      final doc = await _coursesCollection.add({
         'name': course.name,
         'imageUrl': course.imageUrl,
-        'createdAt': course.createdAt
+        'createdAt': course.createdAt,
       });
+      _courses.add(Course(
+        cuid: doc.id,
+        name: course.name,
+        imageUrl: course.imageUrl,
+        createdAt: course.createdAt,
+      ));
       notifyListeners();
     } catch (error) {
-      return;
+      log('Failed to add course: $error');
     }
-  }
-
-  Future<File?> selectImageFromCameraRoll() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.camera);
-
-    return File(image!.path);
-  }
-
-  Future<File?> selectImageFromGallery() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-
-    notifyListeners();
-    return File(image!.path);
-  }
-
-  Future<String> uploadImage(File pickedImage) async {
-    final String bucket = 'media/${pickedImage.path.split('/').last}';
-    final File image = File(pickedImage.path);
-    final Task uploadTask = _ref.child(bucket).putFile(image);
-
-    final snapshot = await uploadTask.whenComplete(() {});
-    final urlDownload = await snapshot.ref.getDownloadURL();
-
-    notifyListeners();
-    return urlDownload;
   }
 }

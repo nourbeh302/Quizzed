@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quizzed/constant.dart';
 import 'package:quizzed/models/auth.dart';
-import 'package:quizzed/services/auth_service.dart';
+import 'package:quizzed/providers/auth_provider.dart';
 import 'package:quizzed/validators/email_validator.dart';
 import 'package:quizzed/validators/password_validator.dart';
 import 'package:quizzed/widgets/appbar.dart';
@@ -22,12 +22,12 @@ class _LoginScreenState extends State<LoginScreen> {
   final _emailValidator = EmailValidator();
   final _passwordValidator = PasswordValidator();
 
-  // Define services
-  final AuthService _authService = AuthService();
+  // Define provider
+  final AuthProvider _authProvider = AuthProvider();
 
   Future<void> logIn() async {
     Student student = Student(_emailController.text, _passwordController.text);
-    String? result = await _authService.logIn(student);
+    String? result = await _authProvider.logIn(student);
 
     return result == 'Success'
         ? navigateToHomeScreen()

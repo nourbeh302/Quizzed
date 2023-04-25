@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Course {
-  String cuid = '';
-  String name;
-  String imageUrl;
-  Timestamp createdAt;
+  final String cuid;
+  final String name;
+  final String imageUrl;
+  final Timestamp createdAt;
 
-  Course(this.name, this.imageUrl, this.createdAt);
-
-  factory Course.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
-    final data = snapshot.data()!;
-    return Course(data['name'], data['imageUrl'], data['createdAt']);
-  }
+  Course({
+    required this.cuid,
+    required this.name,
+    required this.imageUrl,
+    required this.createdAt,
+  });
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:quizzed/screens/shared/welcome.dart';
 import 'package:quizzed/screens/shared/home.dart';
-import 'package:quizzed/services/auth_service.dart';
+import 'package:quizzed/providers/auth_provider.dart';
 
 class Root extends StatefulWidget {
   const Root({super.key});
@@ -16,7 +16,7 @@ class _RootState extends State<Root> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: AuthService().authStateChanges,
+        stream: AuthProvider().authStateChanges,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return const HomeScreen();

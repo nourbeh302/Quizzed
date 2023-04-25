@@ -1,9 +1,7 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quizzed/models/course.dart';
 import 'package:quizzed/providers/course_provider.dart';
-import 'package:quizzed/widgets/circular_progress.dart';
 import 'package:quizzed/widgets/course_card.dart';
 
 class ViewCoursesScreen extends StatelessWidget {
@@ -11,62 +9,46 @@ class ViewCoursesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final courses = Provider.of<CourseProvider>(context).getAllCourses();
+    final courseProvider = Provider.of<CourseProvider>(context);
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Courses'),
+      ),
+      body: StreamBuilder<List<Course>>(
+        stream: courseProvider.coursesStream,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
 
-    return StreamBuilder<List<Course>>(
-      stream: courses,
-      builder: (context, snapshot) {
-        List<Widget> coursesColumn = [];
-        if (snapshot.hasError) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Courses'),
-            ),
-            body: Center(
-              child: Text('Error: ${snapshot.error}'),
-            ),
-          );
-        }
+          final courses = snapshot.data ?? [];
+          courseProvider.setCourses(courses);
 
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Courses'),
-            ),
-            body: const Center(
-              child: CircularProgress(),
-            ),
-          );
-        }
-
-        final courses = snapshot.data!;
-        for (var course in courses) {
-          var singleCourse = CourseCard(course: course);
-          coursesColumn.add(singleCourse);
-        }
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('Courses'),
-          ),
-          body: courses.isNotEmpty
-              ? Container(
-                  margin: const EdgeInsets.symmetric(vertical: 8.0),
-                  padding: const EdgeInsets.all(16.0),
-                  child: ListView.separated(
-                    itemCount: coursesColumn.length,
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 24.0,
-                    ),
-                    itemBuilder: (BuildContext context, int index) {
-                      return coursesColumn[index];
-                    },
-                  ),
-                )
-              : const Center(
-                  child: Text('No courses are available now'),
+          return ListView.builder(
+            itemCount: courses.length,
+            itemBuilder: (context, index) {
+              final course = courses[index];
+              return Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.0),
+                  boxShadow: const [
+                    BoxShadow(
+                      offset: Offset(0, 0),
+                      spreadRadius: 1,
+                      blurRadius: 4,
+                      color: Color.fromRGBO(116, 116, 116, 0.473),
+                    )
+                  ],
                 ),
-        );
-      },
+                margin: const EdgeInsets.all(24.0),
+                child: CourseCard(course: course),
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
