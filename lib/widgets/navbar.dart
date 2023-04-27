@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quizzed/constant.dart';
+// import 'package:quizzed/screens/course/view_courses.dart';
+// import 'package:quizzed/screens/home/home.dart';
 
 class QuizzedNavbar extends StatefulWidget {
   const QuizzedNavbar({super.key});
@@ -10,7 +12,7 @@ class QuizzedNavbar extends StatefulWidget {
 }
 
 class _QuizzedNavbarState extends State<QuizzedNavbar> {
-  int _selectedIndex = 0;
+  static int _selectedIndex = 0;
 
   var routes = [
     '/', 
@@ -21,7 +23,7 @@ class _QuizzedNavbarState extends State<QuizzedNavbar> {
 
   void _onItemTapped(int index) {
     setState(() => _selectedIndex = index);
-    Navigator.pushNamed(context, routes[index]);
+    Navigator.pushNamedAndRemoveUntil(context, routes[index], (route) => false);
   }
 
   @override

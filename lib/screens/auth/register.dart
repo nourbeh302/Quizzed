@@ -4,7 +4,6 @@ import 'package:quizzed/models/auth.dart';
 import 'package:quizzed/providers/auth_provider.dart';
 import 'package:quizzed/validators/email_validator.dart';
 import 'package:quizzed/validators/password_validator.dart';
-import 'package:quizzed/widgets/appbar.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -23,11 +22,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _passwordValidator = PasswordValidator();
 
   // Define services
-  final AuthProvider _authProvider = AuthProvider(); 
+  final AuthProvider _authProvider = AuthProvider();
 
-  Future<void> register() async {
-    Student student = Student(_emailController.text, _passwordController.text);
-    await _authProvider.register(student);
+  bool isChecked = false;
+
+  Future<void> register(bool isProfessor) async {
+    AppUser user =
+        AppUser(_emailController.text, _passwordController.text, isProfessor);
+    await _authProvider.register(user);
     navigateToHomeScreen();
   }
 
@@ -44,9 +46,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const QuizzedAppBar(
-        title: "Register",
-        isBackButtonActive: true,
+      appBar: AppBar(
+        title: const Text('Register'),
+        elevation: 0,
       ),
       body: Container(
           margin: const EdgeInsets.fromLTRB(0, 48, 0, 0),
@@ -106,18 +108,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               fontFamily: baseFontFamily,
                               fontSize: inputFontSize),
                           decoration: InputDecoration(
-                              hintText: "Password",
-                              hintStyle: TextStyle(
-                                  fontFamily: baseFontFamily,
-                                  fontSize: inputFontSize),
-                              focusColor: primaryColor,
-                              focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(
+                            hintText: "Password",
+                            hintStyle: TextStyle(
+                                fontFamily: baseFontFamily,
+                                fontSize: inputFontSize),
+                            focusColor: primaryColor,
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(
                                 color: primaryColor,
-                              ))),
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text('Be a professor'),
+                      Checkbox(
+                        side: const BorderSide(
+                          width: 1,
+                        ),
+                        checkColor: scaffoldColor,
+                        activeColor: primaryColor,
+                        value: isChecked,
+                        onChanged: (bool? value) => setState(() {
+                          isChecked = value!;
+                        }),
+                      ),
+                    ],
                   ),
                   const SizedBox(
                     height: 16,
@@ -139,7 +163,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Processing Data')),
                         );
-                        register();
+                        register(
+                            isChecked); // True means registered as Professor
                       }
                     },
                     child: Text('Register',

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:quizzed/models/course.dart';
 import 'package:quizzed/providers/course_provider.dart';
+// import 'package:quizzed/providers/quiz_provider.dart';
 
 class SingleCourseScreen extends StatelessWidget {
   static const routeName = '/course';
@@ -19,6 +20,7 @@ class SingleCourseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final courseId = ModalRoute.of(context)!.settings.arguments as String;
     final courseProvider = Provider.of<CourseProvider>(context);
+    // final quizProvider = Provider.of<QuizProvider>(context);
 
     return StreamBuilder<List<Course>>(
       stream: courseProvider.coursesStream,
@@ -35,6 +37,7 @@ class SingleCourseScreen extends StatelessWidget {
         courseProvider.setCourses(courses);
 
         final Course course = courseProvider.getSingleCourse(courseId);
+        // var availableQuizzes = quizProvider.getQuizzes(courseId);
 
         return Scaffold(
           appBar: AppBar(
@@ -60,15 +63,48 @@ class SingleCourseScreen extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
                     const SizedBox(
-                      height: 8,
+                      height: 24,
                     ),
-                    OutlinedButton(
-                      onPressed: null,
-                      child: Text(
-                        'View quizzes',
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: OutlinedButton(
+                            onPressed: null,
+                            child: Text(
+                              'View quizzes',
+                              style: Theme.of(context).textTheme.labelMedium,
+                            ),
+                          ),
+                        ),
+                        const Expanded(
+                          flex: 1,
+                          child: SizedBox(),
+                        ),
+                      ],
+                    )
+                    // StreamBuilder(
+                    //     stream: availableQuizzes,
+                    //     builder: (context, snapshot) {
+                    //       final quizzes = snapshot.data ?? [];
+                    //       quizProvider.setquizzes(quizzes);
+
+                    //       // return quizzes.isNotEmpty
+                    //       //     ? ListView.builder(
+                    //       //         itemCount: quizzes.length,
+                    //       //         itemBuilder:
+                    //       //             (BuildContext context, int index) {
+                    //       //           return ListTile(
+                    //       //               title: Text("List item $index"));
+                    //       //         })
+                    //       //     : const Text('No quizzes yet.');
+                    //       return ListView.builder(
+                    //           itemCount: quizzes.length,
+                    //           itemBuilder: (BuildContext context, int index) {
+                    //             return ListTile(
+                    //                 title: Text("List item ${quizzes[0]}"));
+                    //           });
+                    //     })
                   ],
                 ),
               )

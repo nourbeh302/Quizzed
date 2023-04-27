@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:quizzed/providers/auth_provider.dart';
-import 'package:quizzed/widgets/appbar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,9 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const QuizzedAppBar(
-        title: "Home",
-        isBackButtonActive: false,
+      appBar: AppBar(
+        title: const Text('Home'),
+        elevation: 0,
+        automaticallyImplyLeading: false,
       ),
       body: Center(
         child: Container(
@@ -36,7 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Welcome ${loggedInUser?.email ?? 'Professor'}',
+                'Welcome ${loggedInUser?.email ?? 'Professor ${loggedInUser?.email}'}',
                 style: Theme.of(context).textTheme.displayMedium,
                 textAlign: TextAlign.center,
               ),

@@ -1,7 +1,8 @@
-class Student {
+class AppUser {
   String uuid = '';
   String email;
   String password;
+  bool isProfessor = false;
 
-  Student(this.email, this.password);
+  AppUser(this.email, this.password, this.isProfessor);
 }

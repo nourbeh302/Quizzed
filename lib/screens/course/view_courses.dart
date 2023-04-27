@@ -13,6 +13,8 @@ class ViewCoursesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Courses'),
+        elevation: 0,
+        automaticallyImplyLeading: true,
       ),
       body: StreamBuilder<List<Course>>(
         stream: courseProvider.coursesStream,
@@ -36,8 +38,8 @@ class ViewCoursesScreen extends StatelessWidget {
                   boxShadow: const [
                     BoxShadow(
                       offset: Offset(0, 0),
-                      spreadRadius: 1,
-                      blurRadius: 4,
+                      spreadRadius: 0.5,
+                      blurRadius: 2,
                       color: Color.fromRGBO(116, 116, 116, 0.473),
                     )
                   ],

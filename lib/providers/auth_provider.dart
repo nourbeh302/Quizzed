@@ -10,31 +10,31 @@ class AuthProvider with ChangeNotifier {
 
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
-  Future<String?> logIn(Student student) async {
+  Future<String?> logIn(AppUser user) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
-          email: student.email, password: student.password);
+          email: user.email, password: user.password);
       notifyListeners();
-      return 'Success';
+      return 'SUCCESS';
     } on FirebaseAuthException catch (e) {
       return e.message;
     }
   }
 
-  // Creates student in Firebase Auth
-  Future<void> register(Student student) async {
+  // Creates user in Firebase Auth
+  Future<void> register(AppUser user) async {
     await _firebaseAuth.createUserWithEmailAndPassword(
-        email: student.email, password: student.password);
-    await _addStudentToStorage(student.email);
+        email: user.email, password: user.password);
+    await _addUserToStorage(user.email, user.isProfessor);
     notifyListeners();
   }
 
-  // Creates student document in Firestore
-  Future<void> _addStudentToStorage(String email) async {
+  // Creates user document in Firestore
+  Future<void> _addUserToStorage(String email, bool isProfessor) async {
     await _firebaseFirestore
         .collection('Users') // Targets the collection
         .doc(loggedInUser!.uid)
-        .set({'email': email}); // Adds the document
+        .set({'email': email, 'isProfessor': isProfessor}); // Adds the document
     notifyListeners();
   }
 
