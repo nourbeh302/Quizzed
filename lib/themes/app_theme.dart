@@ -7,6 +7,7 @@ class MyThemeData {
       progressIndicatorTheme: ProgressIndicatorThemeData(
         circularTrackColor: primaryColor,
         color: scaffoldColor,
+        linearMinHeight: 64.0
       ),
       snackBarTheme: SnackBarThemeData(
         backgroundColor: primaryColor,

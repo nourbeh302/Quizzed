@@ -21,7 +21,7 @@ double buttonFontSize = 16.0;
 double linkFontSize = 14.5;
 double errorFontSize = 14.5;
 
-String baseFontFamily = 'Roobert';
+String baseFontFamily = 'Satoshi';
 // ----------------
 
 OutlinedButtonThemeData outlinedButtonThemeData = OutlinedButtonThemeData(
@@ -71,9 +71,9 @@ AppBarTheme defaultAppBarTheme = AppBarTheme(
 
 TextTheme defaultTextTheme = const TextTheme(
   displayLarge: TextStyle(
-      color: Colors.black, fontSize: 36.0, fontWeight: FontWeight.w700),
-  displayMedium: TextStyle(color: Colors.black, fontSize: 28.0, fontWeight: FontWeight.w700),
-  displaySmall: TextStyle(color: Colors.black, fontSize: 24.0, fontWeight: FontWeight.w700),
+      color: Colors.black, fontSize: 36.0, fontWeight: FontWeight.w800),
+  displayMedium: TextStyle(color: Colors.black, fontSize: 28.0, fontWeight: FontWeight.w800),
+  displaySmall: TextStyle(color: Colors.black, fontSize: 24.0, fontWeight: FontWeight.w800),
   bodyLarge: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 18.0, fontWeight: FontWeight.w500),
   bodyMedium: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 16.0, fontWeight: FontWeight.w500),
   bodySmall: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 14.0, fontWeight: FontWeight.w500),

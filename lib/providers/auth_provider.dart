@@ -5,10 +5,15 @@ import 'package:quizzed/models/auth.dart';
 
 class AuthProvider with ChangeNotifier {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+
   User? get loggedInUser => _firebaseAuth.currentUser;
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
-
-  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  
+  Future<AppUser?> getFireStoreUser() async {
+    var doc = await _firebaseFirestore.collection('Users').doc(loggedInUser!.uid).get();
+    return AppUser(doc.data()!['email'], doc.data()!['password'] ??= 'DEFAULT', doc.data()!['isProfessor']);
+  }
 
   Future<String?> logIn(AppUser user) async {
     try {

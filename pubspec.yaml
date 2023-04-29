@@ -85,24 +85,17 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    # - family: Helvetica
-    #   fonts:
-    #     - asset: fonts/HelveticaNeueLT_Roman.otf
-        # - asset: fonts/Helvetica-Italic.ttf
-        #   style: italic
-    - family: Roobert
+    - family: Satoshi
       fonts:
-        - asset: fonts/RoobertLight.woff
+        - asset: fonts/Satoshi-Light.otf
           weight: 300
-        - asset: fonts/RoobertRegular.woff
+        - asset: fonts/Satoshi-Regular.otf
           weight: 400
-        - asset: fonts/RoobertMedium.woff
+        - asset: fonts/Satoshi-Medium.otf
           weight: 500
-        - asset: fonts/RoobertSemiBold.woff
-          weight: 600
-        - asset: fonts/RoobertBold.woff
+        - asset: fonts/Satoshi-Bold.otf
           weight: 700
-        - asset: fonts/RoobertHeavy.woff
+        - asset: fonts/Satoshi-Black.otf
           weight: 800
   #
   # For details regarding fonts from package dependencies,
