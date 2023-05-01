@@ -14,7 +14,6 @@ EdgeInsets buttonPadding =
 // ----------------
 
 // Fonts
-
 double appBarFontSize = 24.0;
 double inputFontSize = 20.0;
 double buttonFontSize = 16.0;
@@ -34,27 +33,6 @@ OutlinedButtonThemeData outlinedButtonThemeData = OutlinedButtonThemeData(
   ),
 );
 
-// ElevatedButtonTheme elevatedButtonTheme = ElevatedButtonTheme(
-//   data: ElevatedButtonThemeData(
-//     style: ElevatedButton.styleFrom(
-//       elevation: 0,
-//       backgroundColor: primaryColor,
-//       minimumSize: const Size.fromHeight(32),
-//       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-//       shape: const StadiumBorder(),
-//     ),
-//   ),
-//   child: Text("", style: TextStyle(color: scaffoldColor)),
-// );
-
-AppBar createAppBar(String title) {
-  return AppBar(
-    title: Text(title),
-    backgroundColor: primaryColor,
-    foregroundColor: secondaryColor,
-  );
-}
-
 ElevatedButtonThemeData elevatedButtonThemeData = ElevatedButtonThemeData(
   style: ElevatedButton.styleFrom(
     elevation: 0,
@@ -71,13 +49,48 @@ AppBarTheme defaultAppBarTheme = AppBarTheme(
 
 TextTheme defaultTextTheme = const TextTheme(
   displayLarge: TextStyle(
-      color: Colors.black, fontSize: 36.0, fontWeight: FontWeight.w800),
-  displayMedium: TextStyle(color: Colors.black, fontSize: 28.0, fontWeight: FontWeight.w800),
-  displaySmall: TextStyle(color: Colors.black, fontSize: 24.0, fontWeight: FontWeight.w800),
-  bodyLarge: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 18.0, fontWeight: FontWeight.w500),
-  bodyMedium: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 16.0, fontWeight: FontWeight.w500),
-  bodySmall: TextStyle(color: Color.fromARGB(255, 107, 107, 107), fontSize: 14.0, fontWeight: FontWeight.w500),
-  labelLarge: TextStyle(color: Colors.black, fontSize: 18.0, fontWeight: FontWeight.w500),
-  labelMedium: TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.w500),
-  labelSmall: TextStyle(color: Colors.black, fontSize: 14.0, fontWeight: FontWeight.w500),
+    color: Colors.black,
+    fontSize: 36.0,
+    fontWeight: FontWeight.w800,
+  ),
+  displayMedium: TextStyle(
+    color: Colors.black,
+    fontSize: 28.0,
+    fontWeight: FontWeight.w800,
+  ),
+  displaySmall: TextStyle(
+    color: Colors.black,
+    fontSize: 24.0,
+    fontWeight: FontWeight.w800,
+  ),
+  bodyLarge: TextStyle(
+    color: Color.fromARGB(255, 107, 107, 107),
+    fontSize: 18.0,
+    fontWeight: FontWeight.w500,
+  ),
+  bodyMedium: TextStyle(
+    color: Color.fromARGB(255, 107, 107, 107),
+    fontSize: 16.0,
+    fontWeight: FontWeight.w500,
+  ),
+  bodySmall: TextStyle(
+    color: Color.fromARGB(255, 107, 107, 107),
+    fontSize: 14.0,
+    fontWeight: FontWeight.w500,
+  ),
+  labelLarge: TextStyle(
+    color: Colors.black,
+    fontSize: 18.0,
+    fontWeight: FontWeight.w500,
+  ),
+  labelMedium: TextStyle(
+    color: Colors.black,
+    fontSize: 16.0,
+    fontWeight: FontWeight.w500,
+  ),
+  labelSmall: TextStyle(
+    color: Colors.black,
+    fontSize: 14.0,
+    fontWeight: FontWeight.w500,
+  ),
 );

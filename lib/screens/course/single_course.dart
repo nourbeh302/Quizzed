@@ -68,13 +68,21 @@ class SingleCourseScreen extends StatelessWidget {
                   );
                 }
 
-                final quizzes = snapshot.data ?? [];
-                quizProvider.setQuizzes(quizzes);
+                if (snapshot.data!.isEmpty) {
+                  return Container(
+                    padding: const EdgeInsets.all(16.0),
+                    child: const Text(
+                        'Sorry, there are currently no quizzes available at this time. Please check back later or contact your instructor for more information.'),
+                  );
+                }
+
+                final quizzes = snapshot.data!;
+                quizProvider.setQuizzes(quizzes, courseId);
 
                 return ListView.separated(
                   itemCount: quizzes.length,
                   separatorBuilder: (BuildContext context, int index) =>
-                      const SizedBox(),
+                      const SizedBox.shrink(),
                   itemBuilder: (BuildContext context, int index) {
                     final quiz = quizzes[index];
                     return Padding(
@@ -93,6 +101,26 @@ class SingleCourseScreen extends StatelessWidget {
                               ),
                               Text(timestampToDateTime(quiz.createdAt)),
                               Text('${quiz.duration} min(s)'),
+                              const SizedBox(
+                                height: 24.0,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: OutlinedButton(
+                                      onPressed: null,
+                                      child: Text('Learn More',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium),
+                                    ),
+                                  ),
+                                  const Expanded(
+                                      flex: 1,
+                                      child: SizedBox.shrink()), // Empty row slot
+                                ],
+                              )
                             ],
                           ),
                         ),

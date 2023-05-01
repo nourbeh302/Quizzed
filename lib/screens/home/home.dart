@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Welcome ${loggedInUser?.email ?? 'Professor ${loggedInUser?.email}'}',
+                        'Welcome ${loggedInUser?.email}',
                         style: Theme.of(context).textTheme.displayMedium,
                         textAlign: TextAlign.center,
                       ),
@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.pushNamed(context, '/addCourse'),
                         child: Text('Add new course',
                             style: Theme.of(context).textTheme.labelMedium),
-                      ) : const SizedBox()
+                      ) : const SizedBox.shrink()
                     ],
                   ),
                 ),

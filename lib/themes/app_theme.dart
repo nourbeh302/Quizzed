@@ -4,6 +4,9 @@ import 'package:quizzed/constant.dart';
 class MyThemeData {
   ThemeData getTheme() {
     return ThemeData(
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: primaryColor,
+      ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
         circularTrackColor: primaryColor,
         color: scaffoldColor,

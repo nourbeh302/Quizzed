@@ -58,9 +58,9 @@ class _CourseCardState extends State<CourseCard> {
                         ),
                       ),
                       const Expanded(
-                          flex: 1, child: SizedBox()), // Empty row slot
+                          flex: 1, child: SizedBox.shrink()), // Empty row slot
                     ],
-                  )
+                  ),
                 ],
               ))
         ],
