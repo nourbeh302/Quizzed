@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:quizzed/helpers/format_date.dart';
 import 'package:quizzed/models/course.dart';
 import 'package:quizzed/models/quiz.dart';
+import 'package:quizzed/providers/auth_provider.dart';
 import 'package:quizzed/providers/course_provider.dart';
 import 'package:quizzed/providers/quiz_provider.dart';
 
@@ -12,19 +12,17 @@ class SingleCourseScreen extends StatelessWidget {
 
   const SingleCourseScreen({super.key});
 
-  String timestampToDateTime(Timestamp timestamp) {
-    final date = timestamp.toDate();
-    final formattedDate = DateFormat('dd/MM/yyyy hh:mm a').format(date);
-    return formattedDate;
-  }
-
   @override
   Widget build(BuildContext context) {
     final courseId = ModalRoute.of(context)!.settings.arguments as String;
+    
     final courseProvider = Provider.of<CourseProvider>(context);
     final quizProvider = Provider.of<QuizProvider>(context);
+    final authProvider = Provider.of<AuthProvider>(context);
 
     final Course course = courseProvider.getSingleCourse(courseId);
+
+    final TimestampFormatter formatter = TimestampFormatter();
 
     return Scaffold(
       appBar: AppBar(
@@ -46,7 +44,7 @@ class SingleCourseScreen extends StatelessWidget {
                   height: 8,
                 ),
                 Text(
-                  'Created at: ${timestampToDateTime(course.createdAt)}',
+                  'Created at: ${formatter.formatTimestamp(course.createdAt)}',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
@@ -99,7 +97,7 @@ class SingleCourseScreen extends StatelessWidget {
                                 quiz.title,
                                 style: Theme.of(context).textTheme.displaySmall,
                               ),
-                              Text(timestampToDateTime(quiz.createdAt)),
+                              Text(formatter.formatTimestamp(quiz.createdAt)),
                               Text('${quiz.duration} min(s)'),
                               const SizedBox(
                                 height: 24.0,
@@ -109,7 +107,9 @@ class SingleCourseScreen extends StatelessWidget {
                                   Expanded(
                                     flex: 1,
                                     child: OutlinedButton(
-                                      onPressed: null,
+                                      onPressed: () => Navigator.pushNamed(
+                                          context, '/startQuiz',
+                                          arguments: quiz),
                                       child: Text('Learn More',
                                           style: Theme.of(context)
                                               .textTheme
@@ -118,7 +118,8 @@ class SingleCourseScreen extends StatelessWidget {
                                   ),
                                   const Expanded(
                                       flex: 1,
-                                      child: SizedBox.shrink()), // Empty row slot
+                                      child:
+                                          SizedBox.shrink()), // Empty row slot
                                 ],
                               )
                             ],
@@ -133,6 +134,26 @@ class SingleCourseScreen extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: FutureBuilder(
+          future: authProvider.getFireStoreUser(),
+          builder: (context, snapshot) {
+            bool isLoading =
+                snapshot.connectionState == ConnectionState.waiting;
+            if (isLoading) {
+              return const Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(strokeWidth: 3),
+                ),
+              );
+            }
+            if (snapshot.data!.isProfessor) {
+              return FloatingActionButton(
+                onPressed: () => Navigator.pushNamed(context, '/addQuiz'),
+                child: const Icon(Icons.add, size: 28.0),
+              );
+            }
+            return const SizedBox.shrink();
+          }),
     );
   }
 }

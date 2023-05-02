@@ -54,28 +54,26 @@ class ViewCoursesScreen extends StatelessWidget {
           );
         },
       ),
-      floatingActionButton: Expanded(
-        child: FutureBuilder(
-            future: authProvider.getFireStoreUser(),
-            builder: (context, snapshot) {
-              bool isLoading =
-                  snapshot.connectionState == ConnectionState.waiting;
-              if (isLoading) {
-                return const Scaffold(
-                  body: Center(
-                    child: CircularProgressIndicator(strokeWidth: 3),
-                  ),
-                );
-              }
-              if (snapshot.data!.isProfessor) {
-                return FloatingActionButton(
-                  onPressed: () => Navigator.pushNamed(context, '/addCourse'),
-                  child: const Icon(Icons.add, size: 28.0),
-                );
-              }
-              return const SizedBox.shrink();
-            }),
-      ),
+      floatingActionButton: FutureBuilder(
+          future: authProvider.getFireStoreUser(),
+          builder: (context, snapshot) {
+            bool isLoading =
+                snapshot.connectionState == ConnectionState.waiting;
+            if (isLoading) {
+              return const Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(strokeWidth: 3),
+                ),
+              );
+            }
+            if (snapshot.data!.isProfessor) {
+              return FloatingActionButton(
+                onPressed: () => Navigator.pushNamed(context, '/addCourse'),
+                child: const Icon(Icons.add, size: 28.0),
+              );
+            }
+            return const SizedBox.shrink();
+          }),
     );
   }
 }

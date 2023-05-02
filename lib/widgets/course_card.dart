@@ -1,7 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
+import 'package:quizzed/helpers/format_date.dart';
 import 'package:quizzed/models/course.dart';
 
 class CourseCard extends StatefulWidget {
@@ -13,14 +11,11 @@ class CourseCard extends StatefulWidget {
 }
 
 class _CourseCardState extends State<CourseCard> {
-  String timestampToDateTime(Timestamp timestamp) {
-    final date = timestamp.toDate();
-    final formattedDate = DateFormat('dd/MM/yyyy hh:mm a').format(date);
-    return formattedDate;
-  }
+  final formatter = TimestampFormatter();
 
   @override
   Widget build(BuildContext context) {
+    
     return ClipRRect(
       borderRadius: const BorderRadius.all(Radius.circular(4.0)),
       child: Column(
@@ -44,7 +39,7 @@ class _CourseCardState extends State<CourseCard> {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    timestampToDateTime(widget.course.createdAt),
+                    formatter.formatTimestamp(widget.course.createdAt),
                   ),
                   const SizedBox(height: 24),
                   Row(

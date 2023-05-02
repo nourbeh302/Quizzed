@@ -11,6 +11,8 @@ import 'package:quizzed/screens/auth/welcome.dart';
 import 'package:quizzed/screens/course/single_course.dart';
 import 'package:quizzed/screens/course/view_courses.dart';
 import 'package:quizzed/screens/auth/register.dart';
+import 'package:quizzed/screens/quiz/add_quiz.dart';
+import 'package:quizzed/screens/quiz/start_quiz.dart';
 import 'package:quizzed/themes/app_theme.dart';
 
 Future<void> main() async {
@@ -54,6 +56,8 @@ class MyApp extends StatelessWidget {
         '/courses': (context) => const ViewCoursesScreen(),
         '/addCourse': (context) => const AddCourseScreen(),
         '/course': (context) => const SingleCourseScreen(),
+        '/startQuiz': (context) => const StartQuizScreen(),
+        '/addQuiz': (context) => const AddQuizScreen(),
       },
       debugShowCheckedModeBanner: false,
     );
