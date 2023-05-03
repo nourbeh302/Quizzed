@@ -6,9 +6,5 @@ class Course {
   final String imageUrl;
   final Timestamp createdAt;
 
-  Course({
-    required this.name,
-    required this.imageUrl,
-    required this.createdAt,
-  });
+  Course(this.name, this.imageUrl, this.createdAt);
 }

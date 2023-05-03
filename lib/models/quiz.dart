@@ -1,14 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Quiz {
-  String quid;
+  String quid = '';
   String title;
   Timestamp createdAt;
   String duration;
   DocumentReference? cuid;
 
   Quiz(
-    this.quid,
     this.title,
     this.createdAt,
     this.duration,
@@ -18,7 +17,6 @@ class Quiz {
     final data = doc.data() as Map<String, dynamic>;
 
     return Quiz(
-      doc.id,
       data['title'],
       data['createdAt'],
       data['duration'],

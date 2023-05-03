@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quizzed/models/quiz.dart';
@@ -26,5 +28,27 @@ class QuizProvider extends ChangeNotifier {
   void setQuizzes(List<Quiz> quizzes, String courseId) {
     _quizzes = quizzes..sort((quiz1, quiz2) => quiz1.createdAt.compareTo(quiz2.createdAt));
     notifyListeners();
+  }
+
+  Future<void> addQuiz(Quiz quiz, String courseId) async {
+    try {
+      var doc = await _quizzesCollection.add({
+        'title': quiz.title,
+        'duration': quiz.duration,
+        'createdAt': quiz.createdAt,
+        'cuid': _coursesCollection.doc(courseId),
+      });
+      Quiz newQuiz = Quiz(
+        quiz.title,
+        quiz.createdAt,
+        quiz.duration,
+      );
+      newQuiz.quid = doc.id;
+      newQuiz.cuid = _coursesCollection.doc(courseId);
+      _quizzes.add(newQuiz);
+      notifyListeners();
+    } catch (error) {
+      log('Failed to add course: $error');
+    }
   }
 }

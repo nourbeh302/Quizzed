@@ -21,9 +21,9 @@ class CourseProvider with ChangeNotifier {
         return snapshot.docs.map((doc) {
           final data = doc.data();
           Course newCourse = Course(
-            name: data['name'],
-            imageUrl: data['imageUrl'],
-            createdAt: data['createdAt'],
+            data['name'],
+            data['imageUrl'],
+            data['createdAt'],
           );
           newCourse.cuid = doc.id;
           return newCourse;
@@ -47,9 +47,9 @@ class CourseProvider with ChangeNotifier {
         'createdAt': course.createdAt,
       });
       Course newCourse = Course(
-        name: course.name,
-        imageUrl: course.imageUrl,
-        createdAt: course.createdAt,
+        course.name,
+        course.imageUrl,
+        course.createdAt,
       );
       newCourse.cuid = doc.id;
       _courses.add(newCourse);

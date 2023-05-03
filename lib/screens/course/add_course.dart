@@ -62,9 +62,10 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
   Future<void> uploadImage(pickedImage) async {
     String downloadUrl = await courseProvider.uploadImage(pickedImage);
     Course course = Course(
-        name: _nameController.text,
-        imageUrl: downloadUrl,
-        createdAt: Timestamp.now());
+      _nameController.text,
+      downloadUrl,
+      Timestamp.now(),
+    );
     courseProvider.addCourse(course);
   }
 

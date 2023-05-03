@@ -31,6 +31,17 @@ class ViewCoursesScreen extends StatelessWidget {
           final courses = snapshot.data ?? [];
           courseProvider.setCourses(courses);
 
+          if (snapshot.data!.isEmpty) {
+            return const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Center(
+                child: Text(
+                  'Sorry, there are no courses available right now. Please check back later.',
+                ),
+              ),
+            );
+          }
+
           return ListView.builder(
             itemCount: courses.length,
             itemBuilder: (context, index) {
@@ -60,11 +71,7 @@ class ViewCoursesScreen extends StatelessWidget {
             bool isLoading =
                 snapshot.connectionState == ConnectionState.waiting;
             if (isLoading) {
-              return const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(strokeWidth: 3),
-                ),
-              );
+              return const SizedBox.shrink();
             }
             if (snapshot.data!.isProfessor) {
               return FloatingActionButton(

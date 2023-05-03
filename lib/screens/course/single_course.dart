@@ -15,7 +15,7 @@ class SingleCourseScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final courseId = ModalRoute.of(context)!.settings.arguments as String;
-    
+
     final courseProvider = Provider.of<CourseProvider>(context);
     final quizProvider = Provider.of<QuizProvider>(context);
     final authProvider = Provider.of<AuthProvider>(context);
@@ -140,15 +140,11 @@ class SingleCourseScreen extends StatelessWidget {
             bool isLoading =
                 snapshot.connectionState == ConnectionState.waiting;
             if (isLoading) {
-              return const Scaffold(
-                body: Center(
-                  child: CircularProgressIndicator(strokeWidth: 3),
-                ),
-              );
+              return const SizedBox.shrink();
             }
             if (snapshot.data!.isProfessor) {
               return FloatingActionButton(
-                onPressed: () => Navigator.pushNamed(context, '/addQuiz'),
+                onPressed: () => Navigator.pushNamed(context, '/addQuiz', arguments: courseId),
                 child: const Icon(Icons.add, size: 28.0),
               );
             }
