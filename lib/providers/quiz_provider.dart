@@ -36,12 +36,14 @@ class QuizProvider extends ChangeNotifier {
         'title': quiz.title,
         'duration': quiz.duration,
         'createdAt': quiz.createdAt,
+        'questionCount': quiz.questionCount,
         'cuid': _coursesCollection.doc(courseId),
       });
       Quiz newQuiz = Quiz(
         quiz.title,
         quiz.createdAt,
         quiz.duration,
+        quiz.questionCount,
       );
       newQuiz.quid = doc.id;
       newQuiz.cuid = _coursesCollection.doc(courseId);

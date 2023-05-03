@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:quizzed/constant.dart';
 import 'package:quizzed/models/quiz.dart';
@@ -19,6 +20,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
   // Define input controllers
   final _titleController = TextEditingController();
   final _durationController = TextEditingController();
+  final _questionController = TextEditingController();
   final _titleValidator = StringValidator();
 
   // Define provider
@@ -114,6 +116,31 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                           ),
                         ),
                       ),
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      TextFormField(
+                        controller: _questionController,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        style: TextStyle(
+                            fontFamily: baseFontFamily,
+                            fontSize: inputFontSize),
+                        decoration: InputDecoration(
+                          hintText: "Number of questions",
+                          hintStyle: TextStyle(
+                              fontFamily: baseFontFamily,
+                              fontSize: inputFontSize),
+                          focusColor: primaryColor,
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: primaryColor,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -121,11 +148,23 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
             ),
             Column(
               children: [
+                OutlinedButton(
+                  onPressed: () => Navigator.pushNamed(context, '/addQuestion', arguments: int.parse(_questionController.text)),
+                  child: Text('Add Questions',
+                      style: Theme.of(context).textTheme.labelMedium),
+                ),
+                const SizedBox(
+                  height: 16.0,
+                ),
                 ElevatedButton(
                   onPressed: () {
                     quizProvider.addQuiz(
-                      Quiz(_titleController.text, Timestamp.now(),
-                          int.parse(_durationController.text)),
+                      Quiz(
+                        _titleController.text,
+                        Timestamp.now(),
+                        int.parse(_durationController.text),
+                        int.parse(_questionController.text),
+                      ),
                       courseId,
                     );
                     Navigator.pop(context);

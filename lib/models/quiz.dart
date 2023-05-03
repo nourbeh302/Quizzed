@@ -5,12 +5,14 @@ class Quiz {
   String title;
   Timestamp createdAt;
   int duration;
+  int questionCount;
   DocumentReference? cuid;
 
   Quiz(
     this.title,
     this.createdAt,
     this.duration,
+    this.questionCount,
   );
 
   factory Quiz.fromDocument(DocumentSnapshot doc, String courseId) {
@@ -20,6 +22,7 @@ class Quiz {
       data['title'],
       data['createdAt'],
       data['duration'],
+      data['questionCount'],
     );
   }
 }

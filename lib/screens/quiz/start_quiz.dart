@@ -26,8 +26,12 @@ class StartQuizScreen extends StatelessWidget {
               quiz.title,
               style: Theme.of(context).textTheme.displaySmall,
             ),
+            const SizedBox(
+              height: 8.0,
+            ),
             Text(formatter.formatTimestamp(quiz.createdAt)),
             Text('Duration: ${quiz.duration} min(s)'),
+            Text('Number of questions: ${quiz.questionCount}'),
             const SizedBox(
               height: 24.0,
             ),

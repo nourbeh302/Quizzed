@@ -30,7 +30,8 @@ class SingleCourseScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Image.network(course.imageUrl, width: double.infinity, height: 280, fit: BoxFit.cover),
+          Image.network(course.imageUrl,
+              width: double.infinity, height: 280, fit: BoxFit.cover),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -97,6 +98,9 @@ class SingleCourseScreen extends StatelessWidget {
                                 quiz.title,
                                 style: Theme.of(context).textTheme.displaySmall,
                               ),
+                              const SizedBox(
+                                height: 8.0,
+                              ),
                               Text(formatter.formatTimestamp(quiz.createdAt)),
                               Text('Duration: ${quiz.duration} min(s)'),
                               const SizedBox(
@@ -144,7 +148,8 @@ class SingleCourseScreen extends StatelessWidget {
             }
             if (snapshot.data!.isProfessor) {
               return FloatingActionButton(
-                onPressed: () => Navigator.pushNamed(context, '/addQuiz', arguments: courseId),
+                onPressed: () => Navigator.pushNamed(context, '/addQuiz',
+                    arguments: courseId),
                 child: const Icon(Icons.add, size: 28.0),
               );
             }
