@@ -30,7 +30,7 @@ class SingleCourseScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Image.network(course.imageUrl),
+          Image.network(course.imageUrl, width: double.infinity, height: 280, fit: BoxFit.cover),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -98,7 +98,7 @@ class SingleCourseScreen extends StatelessWidget {
                                 style: Theme.of(context).textTheme.displaySmall,
                               ),
                               Text(formatter.formatTimestamp(quiz.createdAt)),
-                              Text('${quiz.duration} min(s)'),
+                              Text('Duration: ${quiz.duration} min(s)'),
                               const SizedBox(
                                 height: 24.0,
                               ),

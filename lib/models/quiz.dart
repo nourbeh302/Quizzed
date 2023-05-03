@@ -4,7 +4,7 @@ class Quiz {
   String quid = '';
   String title;
   Timestamp createdAt;
-  String duration;
+  int duration;
   DocumentReference? cuid;
 
   Quiz(

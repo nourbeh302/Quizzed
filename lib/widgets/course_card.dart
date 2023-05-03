@@ -38,9 +38,7 @@ class _CourseCardState extends State<CourseCard> {
                     style: Theme.of(context).textTheme.displaySmall,
                   ),
                   const SizedBox(height: 4),
-                  Text(
-                    formatter.formatTimestamp(widget.course.createdAt),
-                  ),
+                  Text('Upload date: ${formatter.formatTimestamp(widget.course.createdAt)}'),
                   const SizedBox(height: 24),
                   Row(
                     children: [

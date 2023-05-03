@@ -125,7 +125,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                   onPressed: () {
                     quizProvider.addQuiz(
                       Quiz(_titleController.text, Timestamp.now(),
-                          _durationController.text),
+                          int.parse(_durationController.text)),
                       courseId,
                     );
                     Navigator.pop(context);
