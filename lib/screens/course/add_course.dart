@@ -6,7 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:quizzed/constant.dart';
 import 'package:quizzed/models/course.dart';
 import 'package:quizzed/providers/course_provider.dart';
-import 'package:quizzed/validators/name_validator.dart';
+import 'package:quizzed/validators/string_validator.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -21,7 +21,7 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
   // Define input controllers
   final _nameController = TextEditingController();
   final _imageController = TextEditingController();
-  final _nameValidator = NameValidator();
+  final _nameValidator = StringValidator();
 
   // Define image file
   File? pickedImage;
@@ -95,7 +95,7 @@ class _AddCourseScreenState extends State<AddCourseScreen> {
                           if (value == null || value.isEmpty) {
                             return "Fill the field";
                           }
-                          if (!_nameValidator.isNameValid(value)) {
+                          if (!_nameValidator.isValueValid(value)) {
                             return "Course name should be at least 3 characters";
                           }
                           return null;

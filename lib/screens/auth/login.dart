@@ -25,7 +25,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final AuthProvider _authProvider = AuthProvider();
 
   Future<void> logIn(bool isProfessor) async {
-    AppUser user = AppUser(_emailController.text, _passwordController.text, isProfessor);
+    AppUser user =
+        AppUser(_emailController.text, _passwordController.text, isProfessor);
     String? result = await _authProvider.logIn(user);
 
     return result == 'SUCCESS'
@@ -111,8 +112,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           if (value == null || value.isEmpty) {
                             return "Fill the field";
                           }
-                          if (!_passwordValidator.isPasswordValid(value)) {
-                            return "Passwords should be at least ${_passwordValidator.minCharacters} characters";
+                          if (!_passwordValidator.isPasswordValid(
+                              value, 8, 100)) {
+                            return "Passwords should be at least 8 characters";
                           }
                           return null;
                         },

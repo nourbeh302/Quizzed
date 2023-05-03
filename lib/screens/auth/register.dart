@@ -99,8 +99,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             if (value == null || value.isEmpty) {
                               return "Fill the field";
                             }
-                            if (!_passwordValidator.isPasswordValid(value)) {
-                              return "Passwords should be at least ${_passwordValidator.minCharacters} characters";
+                            if (!_passwordValidator.isPasswordValid(value, 8, 100)) {
+                              return "Passwords should be at least 8 characters";
                             }
                             return null;
                           },

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:quizzed/constant.dart';
 import 'package:quizzed/models/quiz.dart';
 import 'package:quizzed/providers/quiz_provider.dart';
-import 'package:quizzed/validators/name_validator.dart';
+import 'package:quizzed/validators/string_validator.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -19,7 +19,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
   // Define input controllers
   final _titleController = TextEditingController();
   final _durationController = TextEditingController();
-  final _titleValidator = NameValidator();
+  final _titleValidator = StringValidator();
 
   // Define provider
   final quizProvider = QuizProvider();
@@ -72,7 +72,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                           if (value == null || value.isEmpty) {
                             return "Fill the field";
                           }
-                          if (!_titleValidator.isNameValid(value)) {
+                          if (!_titleValidator.isValueValid(value)) {
                             return "Course name should be at least 3 characters";
                           }
                           return null;
