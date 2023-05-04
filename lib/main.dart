@@ -11,7 +11,7 @@ import 'package:quizzed/screens/auth/welcome.dart';
 import 'package:quizzed/screens/course/single_course.dart';
 import 'package:quizzed/screens/course/view_courses.dart';
 import 'package:quizzed/screens/auth/register.dart';
-import 'package:quizzed/screens/question/add_question.dart';
+import 'package:quizzed/screens/question/add_questions.dart';
 import 'package:quizzed/screens/quiz/add_quiz.dart';
 import 'package:quizzed/screens/quiz/start_quiz.dart';
 import 'package:quizzed/themes/app_theme.dart';
@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
         '/course': (context) => const SingleCourseScreen(),
         '/startQuiz': (context) => const StartQuizScreen(),
         '/addQuiz': (context) => const AddQuizScreen(),
-        '/addQuestion': (context) => const AddQuestionScreen(),
+        '/addQuestion': (context) => const AddQuestionsScreen(),
       },
       debugShowCheckedModeBanner: false,
     );
