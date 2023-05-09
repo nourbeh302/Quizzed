@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Question {
   String id = '';
-  final String body;
-  final String answerId;
+  late final String body;
+  String answerId;
   DocumentReference? quid;
 
   Question(this.body, this.answerId);

@@ -4,10 +4,11 @@ import 'package:flutter/services.dart';
 
 import 'package:quizzed/constant.dart';
 import 'package:quizzed/models/quiz.dart';
-import 'package:quizzed/providers/quiz_provider.dart';
 import 'package:quizzed/validators/string_validator.dart';
 
 final _formKey = GlobalKey<FormState>();
+final _coursesCollection = FirebaseFirestore.instance.collection('Courses');
+final _quizzesCollection = FirebaseFirestore.instance.collection('Quizzes');
 
 class AddQuizScreen extends StatefulWidget {
   const AddQuizScreen({super.key});
@@ -22,9 +23,6 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
   final _durationController = TextEditingController();
   final _questionController = TextEditingController();
   final _titleValidator = StringValidator();
-
-  // Define provider
-  final quizProvider = QuizProvider();
 
   void showErrorDialog(String error) {
     showDialog(
@@ -48,8 +46,7 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final courseId = ModalRoute.of(context)!.settings.arguments as String;
-
+    var courseId = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add New Quiz'),
@@ -85,8 +82,9 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                         decoration: InputDecoration(
                           hintText: "Quiz Title",
                           hintStyle: TextStyle(
-                              fontFamily: baseFontFamily,
-                              fontSize: inputFontSize),
+                            fontFamily: baseFontFamily,
+                            fontSize: inputFontSize,
+                          ),
                           focusColor: primaryColor,
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -101,13 +99,15 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                       TextFormField(
                         controller: _durationController,
                         style: TextStyle(
-                            fontFamily: baseFontFamily,
-                            fontSize: inputFontSize),
+                          fontFamily: baseFontFamily,
+                          fontSize: inputFontSize,
+                        ),
                         decoration: InputDecoration(
                           hintText: "Duration in minutes",
                           hintStyle: TextStyle(
-                              fontFamily: baseFontFamily,
-                              fontSize: inputFontSize),
+                            fontFamily: baseFontFamily,
+                            fontSize: inputFontSize,
+                          ),
                           focusColor: primaryColor,
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -126,13 +126,15 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                           FilteringTextInputFormatter.digitsOnly
                         ],
                         style: TextStyle(
-                            fontFamily: baseFontFamily,
-                            fontSize: inputFontSize),
+                          fontFamily: baseFontFamily,
+                          fontSize: inputFontSize,
+                        ),
                         decoration: InputDecoration(
                           hintText: "Number of questions",
                           hintStyle: TextStyle(
-                              fontFamily: baseFontFamily,
-                              fontSize: inputFontSize),
+                            fontFamily: baseFontFamily,
+                            fontSize: inputFontSize,
+                          ),
                           focusColor: primaryColor,
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -149,27 +151,21 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
             Column(
               children: [
                 OutlinedButton(
-                  onPressed: () => Navigator.pushNamed(context, '/addQuestion', arguments: int.parse(_questionController.text)),
-                  child: Text('Add Questions',
-                      style: Theme.of(context).textTheme.labelMedium),
-                ),
-                const SizedBox(
-                  height: 16.0,
-                ),
-                ElevatedButton(
                   onPressed: () {
-                    quizProvider.addQuiz(
-                      Quiz(
-                        _titleController.text,
-                        Timestamp.now(),
-                        int.parse(_durationController.text),
-                        int.parse(_questionController.text),
-                      ),
-                      courseId,
+                    Quiz draftQuiz = Quiz(
+                      _titleController.text,
+                      Timestamp.now(),
+                      int.parse(_durationController.text),
+                      int.parse(_questionController.text),
                     );
-                    Navigator.pop(context);
+
+                    draftQuiz.cuid = _coursesCollection.doc(courseId);
+                    draftQuiz.quid = _quizzesCollection.doc().id;
+
+                    Navigator.pushNamed(context, '/addQuestion',
+                        arguments: draftQuiz);
                   },
-                  child: Text('Add Quiz',
+                  child: Text('Add Questions',
                       style: Theme.of(context).textTheme.labelMedium),
                 ),
               ],
