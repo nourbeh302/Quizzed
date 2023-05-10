@@ -71,6 +71,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(
                         height: 16,
                       ),
+                      OutlinedButton(
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/searchQuiz'),
+                        child: Text('Search quiz',
+                            style: Theme.of(context).textTheme.labelMedium),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
                       snapshot.data!.isProfessor ? 
                       OutlinedButton(
                         onPressed: () =>

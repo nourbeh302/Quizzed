@@ -13,12 +13,12 @@ class QuestionProvider extends ChangeNotifier {
 
   Stream<List<Question>> getAllQuestion(String quizId) {
     var snapshots = _questionsCollection
-        .where('quid', isEqualTo: _quizzesCollection.doc(quizId))
+        .where('quizRef', isEqualTo: _quizzesCollection.doc(quizId))
         .snapshots();
     var questionStream = snapshots.map((snapshot) {
       return snapshot.docs.map((doc) {
         Question newQuestion = Question.fromDocument(doc, quizId);
-        newQuestion.quid = _quizzesCollection.doc(quizId);
+        newQuestion.quizRef = _quizzesCollection.doc(quizId);
         return newQuestion;
       }).toList();
     });
@@ -34,15 +34,15 @@ class QuestionProvider extends ChangeNotifier {
     try {
       var doc = await _questionsCollection.add({
         'body': question.body,
-        'answerId': question.answerId,
-        'quid': _quizzesCollection.doc(quizId),
+        'answer': question.answer,
+        'quizRef': _quizzesCollection.doc(quizId),
       });
       Question newQuestion = Question(
         question.body,
-        question.answerId,
+        question.answer,
       );
       newQuestion.id = doc.id;
-      newQuestion.quid = _quizzesCollection.doc(quizId);
+      newQuestion.quizRef = _quizzesCollection.doc(quizId);
       _questions.add(newQuestion);
       notifyListeners();
     } catch (error) {

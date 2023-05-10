@@ -76,13 +76,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             return null;
                           },
                           style: TextStyle(
-                              fontFamily: baseFontFamily,
-                              fontSize: inputFontSize),
+                            fontFamily: baseFontFamily,
+                            fontSize: inputFontSize,
+                          ),
                           decoration: InputDecoration(
                               hintText: "Email",
                               hintStyle: TextStyle(
-                                  fontFamily: baseFontFamily,
-                                  fontSize: inputFontSize),
+                                fontFamily: baseFontFamily,
+                                fontSize: inputFontSize,
+                              ),
                               focusColor: primaryColor,
                               focusedBorder: UnderlineInputBorder(
                                   borderSide: BorderSide(
@@ -99,19 +101,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             if (value == null || value.isEmpty) {
                               return "Fill the field";
                             }
-                            if (!_passwordValidator.isPasswordValid(value, 8, 100)) {
+                            if (!_passwordValidator.isPasswordValid(
+                                value, 8, 100)) {
                               return "Passwords should be at least 8 characters";
                             }
                             return null;
                           },
                           style: TextStyle(
-                              fontFamily: baseFontFamily,
-                              fontSize: inputFontSize),
+                            fontFamily: baseFontFamily,
+                            fontSize: inputFontSize,
+                          ),
                           decoration: InputDecoration(
                             hintText: "Password",
                             hintStyle: TextStyle(
-                                fontFamily: baseFontFamily,
-                                fontSize: inputFontSize),
+                              fontFamily: baseFontFamily,
+                              fontSize: inputFontSize,
+                            ),
                             focusColor: primaryColor,
                             focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(
@@ -137,9 +142,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         checkColor: scaffoldColor,
                         activeColor: primaryColor,
                         value: isChecked,
-                        onChanged: (bool? value) => setState(() {
-                          isChecked = value!;
-                        }),
+                        onChanged: (bool? value) =>
+                            setState(() => isChecked = value!),
                       ),
                     ],
                   ),
@@ -150,7 +154,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     onTap: () => Navigator.pushNamed(context, '/login'),
                     child: Text(
                       'Already have account? Sign in',
-                      style: TextStyle(color: primaryColor),
+                      style: TextStyle(
+                        color: primaryColor,
+                      ),
                     ),
                   ),
                 ],
@@ -167,8 +173,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             isChecked); // True means registered as Professor
                       }
                     },
-                    child: Text('Register',
-                        style: Theme.of(context).textTheme.labelMedium),
+                    child: Text(
+                      'Register',
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
                   ),
                 ],
               ),

@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Quiz {
   String quid = '';
-  String title;
-  Timestamp createdAt;
-  int duration;
-  int questionCount;
-  DocumentReference? cuid;
+  final String title;
+  final Timestamp createdAt;
+  final int duration;
+  final int questionCount;
+  DocumentReference? courseRef;
 
   Quiz(
     this.title,

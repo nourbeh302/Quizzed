@@ -13,6 +13,7 @@ import 'package:quizzed/screens/course/view_courses.dart';
 import 'package:quizzed/screens/auth/register.dart';
 import 'package:quizzed/screens/question/add_questions.dart';
 import 'package:quizzed/screens/quiz/add_quiz.dart';
+import 'package:quizzed/screens/quiz/search_quiz.dart';
 import 'package:quizzed/screens/quiz/start_quiz.dart';
 import 'package:quizzed/themes/app_theme.dart';
 
@@ -44,11 +45,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AuthProvider authProvider = Provider.of<AuthProvider>(context);
     return MaterialApp(
       theme: MyThemeData().getTheme(),
       title: _title,
-      initialRoute: authProvider.loggedInUser != null ? '/' : '/Welcome',
+      initialRoute: '/Welcome',
       routes: {
         '/': (context) => const HomeScreen(),
         '/Welcome': (context) => const WelcomeScreen(),
@@ -58,6 +58,7 @@ class MyApp extends StatelessWidget {
         '/addCourse': (context) => const AddCourseScreen(),
         '/course': (context) => const SingleCourseScreen(),
         '/startQuiz': (context) => const StartQuizScreen(),
+        '/searchQuiz': (context) => const SearchQuizScreen(),
         '/addQuiz': (context) => const AddQuizScreen(),
         '/addQuestion': (context) => const AddQuestionsScreen(),
       },

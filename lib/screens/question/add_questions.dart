@@ -37,6 +37,13 @@ class _AddQuestionsScreenState extends State<AddQuestionsScreen> {
       (_) => TextEditingController(),
     );
 
+    // print("================${quiz.title.toString()}================");
+    // print("================${quiz.createdAt.toString()}================");
+    // print("================${quiz.duration.toString()}================");
+    // print("================${quiz.questionCount.toString()}================");
+    // print("================${quiz.quid.toString()}================");
+    // print("================${quiz.cuid!.path.toString()}================");
+
     return Scaffold(
       appBar: AppBar(
         title: Text(quiz.title),
@@ -101,28 +108,10 @@ class _AddQuestionsScreenState extends State<AddQuestionsScreen> {
               ),
             ),
             const SizedBox(height: 16.0),
-            // Text(quiz.cuid!.path),
+            Text(quiz.courseRef!.path),
             ElevatedButton(
               onPressed: () {
-                // Add quiz
-                // Add question
                 for (var i = 0; i < quiz.questionCount; i++) {
-                  quizProvider.addQuiz(
-                    Quiz(
-                      quiz.title,
-                      quiz.createdAt,
-                      quiz.duration,
-                      quiz.questionCount,
-                    ),
-                    quiz.cuid!.path,
-                  );
-
-                  print("================${quiz.title.toString()}================");
-                  print("================${quiz.createdAt.toString()}================");
-                  print("================${quiz.duration.toString()}================");
-                  print("================${quiz.questionCount.toString()}================");
-                  print("================${quiz.quid.toString()}================");
-
                   questionProvider.addQuestion(
                     Question(
                       questiontextControllers[i].text,
@@ -132,7 +121,7 @@ class _AddQuestionsScreenState extends State<AddQuestionsScreen> {
                   );
                 }
 
-                Navigator.pop(context);
+                Navigator.popAndPushNamed(context, '/');
               },
               child: Text('Add Quiz',
                   style: Theme.of(context).textTheme.labelMedium),

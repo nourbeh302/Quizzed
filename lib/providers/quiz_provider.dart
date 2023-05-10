@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quizzed/models/quiz.dart';
@@ -11,46 +9,52 @@ class QuizProvider extends ChangeNotifier {
   List<Quiz> _quizzes = [];
   List<Quiz> get quizzes => _quizzes;
 
-  Stream<List<Quiz>> getAllQuizzes(String courseId) {
-    var snapshots = _quizzesCollection
-        .where('cuid', isEqualTo: _coursesCollection.doc(courseId))
-        .snapshots();
+  Stream<List<Quiz>> getAllQuizzes() {
+    var snapshots = _quizzesCollection.snapshots();
     var quizStream = snapshots.map((snapshot) {
       return snapshot.docs.map((doc) {
-        Quiz newQuiz = Quiz.fromDocument(doc, courseId);
-        newQuiz.cuid = _coursesCollection.doc(courseId);
+        Quiz newQuiz = Quiz(
+          doc.data()['title'],
+          doc.data()['createdAt'],
+          doc.data()['duration'],
+          doc.data()['questionCount'],
+        );
         return newQuiz;
       }).toList();
     });
     return quizStream;
   }
 
-  void setQuizzes(List<Quiz> quizzes, String courseId) {
-    _quizzes = quizzes..sort((quiz1, quiz2) => quiz1.createdAt.compareTo(quiz2.createdAt));
+  Stream<List<Quiz>> getQuizzesByCourseId(String courseId) {
+    var snapshots = _quizzesCollection
+        .where('courseRef', isEqualTo: _coursesCollection.doc(courseId))
+        .snapshots();
+    var quizStream = snapshots.map((snapshot) {
+      return snapshot.docs.map((doc) {
+        Quiz newQuiz = Quiz.fromDocument(doc, courseId);
+        newQuiz.courseRef = _coursesCollection.doc(courseId);
+        return newQuiz;
+      }).toList();
+    });
+    return quizStream;
+  }
+
+  void setQuizzes(List<Quiz> quizzes) {
+    _quizzes = quizzes
+      ..sort((quiz1, quiz2) => quiz1.createdAt.compareTo(quiz2.createdAt));
     notifyListeners();
   }
 
   Future<void> addQuiz(Quiz quiz, String courseId) async {
-    try {
-      var doc = await _quizzesCollection.add({
-        'title': quiz.title,
-        'duration': quiz.duration,
-        'createdAt': quiz.createdAt,
-        'questionCount': quiz.questionCount,
-        'cuid': _coursesCollection.doc(courseId),
-      });
-      Quiz newQuiz = Quiz(
-        quiz.title,
-        quiz.createdAt,
-        quiz.duration,
-        quiz.questionCount,
-      );
-      newQuiz.quid = doc.id;
-      newQuiz.cuid = _coursesCollection.doc(courseId);
-      _quizzes.add(newQuiz);
-      notifyListeners();
-    } catch (error) {
-      log('Failed to add course: $error');
-    }
+    final quizDoc = _quizzesCollection.doc();
+    await quizDoc.set({
+      'title': quiz.title,
+      'createdAt': quiz.createdAt,
+      'duration': quiz.duration,
+      'questionCount': quiz.questionCount,
+      'courseRef': quiz.courseRef,
+    });
+    quiz.quid = quizDoc.id;
+    notifyListeners();
   }
 }

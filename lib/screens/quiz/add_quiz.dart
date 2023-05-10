@@ -4,11 +4,11 @@ import 'package:flutter/services.dart';
 
 import 'package:quizzed/constant.dart';
 import 'package:quizzed/models/quiz.dart';
+import 'package:quizzed/providers/quiz_provider.dart';
 import 'package:quizzed/validators/string_validator.dart';
 
 final _formKey = GlobalKey<FormState>();
 final _coursesCollection = FirebaseFirestore.instance.collection('Courses');
-final _quizzesCollection = FirebaseFirestore.instance.collection('Quizzes');
 
 class AddQuizScreen extends StatefulWidget {
   const AddQuizScreen({super.key});
@@ -23,6 +23,9 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
   final _durationController = TextEditingController();
   final _questionController = TextEditingController();
   final _titleValidator = StringValidator();
+
+  // Define providers
+  final QuizProvider _quizProvider = QuizProvider();
 
   void showErrorDialog(String error) {
     showDialog(
@@ -121,6 +124,12 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
                       ),
                       TextFormField(
                         controller: _questionController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return "Fill the field";
+                          }
+                          return null;
+                        },
                         keyboardType: TextInputType.number,
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly
@@ -152,18 +161,21 @@ class _AddQuizScreenState extends State<AddQuizScreen> {
               children: [
                 OutlinedButton(
                   onPressed: () {
-                    Quiz draftQuiz = Quiz(
+                    if (_formKey.currentState!.validate())
+                    {
+                      Quiz draftQuiz = Quiz(
                       _titleController.text,
                       Timestamp.now(),
                       int.parse(_durationController.text),
                       int.parse(_questionController.text),
                     );
+                    draftQuiz.courseRef = _coursesCollection.doc(courseId);
 
-                    draftQuiz.cuid = _coursesCollection.doc(courseId);
-                    draftQuiz.quid = _quizzesCollection.doc().id;
+                    _quizProvider.addQuiz(draftQuiz, draftQuiz.courseRef!.path);
 
                     Navigator.pushNamed(context, '/addQuestion',
                         arguments: draftQuiz);
+                    }
                   },
                   child: Text('Add Questions',
                       style: Theme.of(context).textTheme.labelMedium),

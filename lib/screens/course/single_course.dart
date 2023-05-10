@@ -53,7 +53,7 @@ class SingleCourseScreen extends StatelessWidget {
           ),
           Expanded(
             child: StreamBuilder<List<Quiz>>(
-              stream: quizProvider.getAllQuizzes(courseId),
+              stream: quizProvider.getQuizzesByCourseId(courseId),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(
@@ -76,7 +76,7 @@ class SingleCourseScreen extends StatelessWidget {
                 }
 
                 final quizzes = snapshot.data!;
-                quizProvider.setQuizzes(quizzes, courseId);
+                quizProvider.setQuizzes(quizzes);
 
                 return ListView.separated(
                   itemCount: quizzes.length,
@@ -121,9 +121,9 @@ class SingleCourseScreen extends StatelessWidget {
                                     ),
                                   ),
                                   const Expanded(
-                                      flex: 1,
-                                      child:
-                                          SizedBox.shrink()), // Empty row slot
+                                    flex: 1,
+                                    child: SizedBox.shrink(),
+                                  ), // Empty row slot
                                 ],
                               )
                             ],

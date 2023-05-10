@@ -89,18 +89,22 @@ class _LoginScreenState extends State<LoginScreen> {
                           return null;
                         },
                         style: TextStyle(
-                            fontFamily: baseFontFamily,
-                            fontSize: inputFontSize),
+                          fontFamily: baseFontFamily,
+                          fontSize: inputFontSize,
+                        ),
                         decoration: InputDecoration(
-                            hintText: "Email",
-                            hintStyle: TextStyle(
-                                fontFamily: baseFontFamily,
-                                fontSize: inputFontSize),
-                            focusColor: primaryColor,
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
+                          hintText: "Email",
+                          hintStyle: TextStyle(
+                            fontFamily: baseFontFamily,
+                            fontSize: inputFontSize,
+                          ),
+                          focusColor: primaryColor,
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
                               color: primaryColor,
-                            ))),
+                            ),
+                          ),
+                        ),
                       ),
                       const SizedBox(
                         height: 32,
@@ -119,18 +123,22 @@ class _LoginScreenState extends State<LoginScreen> {
                           return null;
                         },
                         style: TextStyle(
-                            fontFamily: baseFontFamily,
-                            fontSize: inputFontSize),
+                          fontFamily: baseFontFamily,
+                          fontSize: inputFontSize,
+                        ),
                         decoration: InputDecoration(
-                            hintText: "Password",
-                            hintStyle: TextStyle(
-                                fontFamily: baseFontFamily,
-                                fontSize: inputFontSize),
-                            focusColor: primaryColor,
-                            focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
+                          hintText: "Password",
+                          hintStyle: TextStyle(
+                            fontFamily: baseFontFamily,
+                            fontSize: inputFontSize,
+                          ),
+                          focusColor: primaryColor,
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
                               color: primaryColor,
-                            ))),
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
