@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:quizzed/providers/auth_provider.dart';
 import 'package:quizzed/providers/course_provider.dart';
 import 'package:quizzed/providers/quiz_provider.dart';
+import 'package:quizzed/providers/score_provider.dart';
 import 'package:quizzed/screens/course/add_course.dart';
 import 'package:quizzed/screens/home/home.dart';
 import 'package:quizzed/screens/auth/login.dart';
@@ -12,7 +13,9 @@ import 'package:quizzed/screens/course/single_course.dart';
 import 'package:quizzed/screens/course/view_courses.dart';
 import 'package:quizzed/screens/auth/register.dart';
 import 'package:quizzed/screens/question/add_questions.dart';
+import 'package:quizzed/screens/question/questions.dart';
 import 'package:quizzed/screens/quiz/add_quiz.dart';
+import 'package:quizzed/screens/quiz/final_score.dart';
 import 'package:quizzed/screens/quiz/search_quiz.dart';
 import 'package:quizzed/screens/quiz/start_quiz.dart';
 import 'package:quizzed/themes/app_theme.dart';
@@ -32,6 +35,9 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider<QuizProvider>(
           create: (_) => QuizProvider(),
+        ),
+        ChangeNotifierProvider<ScoreProvider>(
+          create: (_) => ScoreProvider(),
         ),
       ],
       child: const MyApp(),
@@ -61,6 +67,8 @@ class MyApp extends StatelessWidget {
         '/searchQuiz': (context) => const SearchQuizScreen(),
         '/addQuiz': (context) => const AddQuizScreen(),
         '/addQuestion': (context) => const AddQuestionsScreen(),
+        '/questions': (context) => const QuestionsScreen(),
+        '/finalScore': (context) => const FinalScoreScreen(),
       },
       debugShowCheckedModeBanner: false,
     );

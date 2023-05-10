@@ -39,6 +39,11 @@ class QuizProvider extends ChangeNotifier {
     return quizStream;
   }
 
+  Quiz getSingleQuizByTitle(String title) {
+    _quizzesCollection.where('title', isEqualTo: title).get();
+    return quizzes.firstWhere((quiz) => quiz.title == title);
+  }
+
   void setQuizzes(List<Quiz> quizzes) {
     _quizzes = quizzes
       ..sort((quiz1, quiz2) => quiz1.createdAt.compareTo(quiz2.createdAt));
@@ -57,4 +62,20 @@ class QuizProvider extends ChangeNotifier {
     quiz.quid = quizDoc.id;
     notifyListeners();
   }
+
+  Future<String?> getQuizIdByTitle(String title) async {
+  try {
+    final QuerySnapshot querySnapshot = await _quizzesCollection
+        .where('title', isEqualTo: title)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      return querySnapshot.docs.first.id;
+    } else {
+      return null;
+    }
+  } catch (e) {
+    return null;
+  }
+}
 }

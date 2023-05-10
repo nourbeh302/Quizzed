@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:quizzed/helpers/format_date.dart';
 import 'package:quizzed/models/quiz.dart';
+import 'package:quizzed/providers/auth_provider.dart';
 
 class StartQuizScreen extends StatelessWidget {
   const StartQuizScreen({super.key});
@@ -11,6 +10,8 @@ class StartQuizScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final quiz = ModalRoute.of(context)!.settings.arguments as Quiz;
     final formatter = TimestampFormatter();
+
+    final AuthProvider authProvider = AuthProvider();
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -40,7 +41,16 @@ class StartQuizScreen extends StatelessWidget {
                 Expanded(
                   flex: 1,
                   child: OutlinedButton(
-                    onPressed: () => log('Start Quiz'),
+                    onPressed: () async {
+                      var user = await authProvider.getFireStoreUser();
+                      if (!(user!.isProfessor)) {
+                        print('Professor cannot take quizzes');
+                        return;
+                      }
+                      print(quiz.title);
+                      // ignore: use_build_context_synchronously
+                      Navigator.pushNamed(context, '/questions', arguments: quiz);
+                    },
                     child: Text('Start Quiz',
                         style: Theme.of(context).textTheme.labelMedium),
                   ),

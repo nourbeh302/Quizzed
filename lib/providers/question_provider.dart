@@ -11,7 +11,7 @@ class QuestionProvider extends ChangeNotifier {
   List<Question> _questions = [];
   List<Question> get questions => _questions;
 
-  Stream<List<Question>> getAllQuestion(String quizId) {
+  Stream<List<Question>> getAllQuestions(String quizId) {
     var snapshots = _questionsCollection
         .where('quizRef', isEqualTo: _quizzesCollection.doc(quizId))
         .snapshots();

@@ -6,6 +6,7 @@ class Quiz {
   final Timestamp createdAt;
   final int duration;
   final int questionCount;
+  // final bool isPublic;
   DocumentReference? courseRef;
 
   Quiz(
