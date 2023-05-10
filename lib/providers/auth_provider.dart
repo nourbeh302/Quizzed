@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,10 +11,17 @@ class AuthProvider with ChangeNotifier {
 
   User? get loggedInUser => _firebaseAuth.currentUser;
   Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
-  
+
   Future<AppUser?> getFireStoreUser() async {
-    var doc = await _firebaseFirestore.collection('Users').doc(loggedInUser!.uid).get();
-    return AppUser(doc.data()!['email'], doc.data()!['password'] ??= 'DEFAULT', doc.data()!['isProfessor']);
+    var doc = await _firebaseFirestore
+        .collection('Users')
+        .doc(loggedInUser!.uid)
+        .get();
+    return AppUser(
+      doc.data()!['email'],
+      doc.data()!['password'] ??= 'DEFAULT',
+      doc.data()!['isProfessor'],
+    );
   }
 
   Future<String?> logIn(AppUser user) async {
@@ -46,5 +55,13 @@ class AuthProvider with ChangeNotifier {
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
     notifyListeners();
+  }
+
+  Future<void> getActiveUsers() async {
+    _firebaseAuth.authStateChanges().listen((user) {
+      if (user != null) {
+        log('${user.email} has logged in');
+      }
+    });
   }
 }

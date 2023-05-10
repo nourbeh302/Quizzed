@@ -37,13 +37,6 @@ class _AddQuestionsScreenState extends State<AddQuestionsScreen> {
       (_) => TextEditingController(),
     );
 
-    // print("================${quiz.title.toString()}================");
-    // print("================${quiz.createdAt.toString()}================");
-    // print("================${quiz.duration.toString()}================");
-    // print("================${quiz.questionCount.toString()}================");
-    // print("================${quiz.quid.toString()}================");
-    // print("================${quiz.cuid!.path.toString()}================");
-
     return Scaffold(
       appBar: AppBar(
         title: Text(quiz.title),

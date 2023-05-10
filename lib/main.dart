@@ -18,6 +18,7 @@ import 'package:quizzed/screens/quiz/add_quiz.dart';
 import 'package:quizzed/screens/quiz/final_score.dart';
 import 'package:quizzed/screens/quiz/search_quiz.dart';
 import 'package:quizzed/screens/quiz/start_quiz.dart';
+import 'package:quizzed/screens/student/track_students.dart';
 import 'package:quizzed/themes/app_theme.dart';
 
 Future<void> main() async {
@@ -69,6 +70,7 @@ class MyApp extends StatelessWidget {
         '/addQuestion': (context) => const AddQuestionsScreen(),
         '/questions': (context) => const QuestionsScreen(),
         '/finalScore': (context) => const FinalScoreScreen(),
+        '/trackStudents': (context) => const TrackStudentsScreen(),
       },
       debugShowCheckedModeBanner: false,
     );

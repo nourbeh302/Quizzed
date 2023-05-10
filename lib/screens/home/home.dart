@@ -80,13 +80,29 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(
                         height: 16,
                       ),
-                      snapshot.data!.isProfessor ? 
-                      OutlinedButton(
-                        onPressed: () =>
-                            Navigator.pushNamed(context, '/addCourse'),
-                        child: Text('Add new course',
-                            style: Theme.of(context).textTheme.labelMedium),
-                      ) : const SizedBox.shrink()
+                      snapshot.data!.isProfessor
+                          ? OutlinedButton(
+                              onPressed: () => Navigator.pushNamed(
+                                  context, '/trackStudents'),
+                              child: Text(
+                                'Track Students',
+                                style: Theme.of(context).textTheme.labelMedium,
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      snapshot.data!.isProfessor
+                          ? OutlinedButton(
+                              onPressed: () =>
+                                  Navigator.pushNamed(context, '/addCourse'),
+                              child: Text(
+                                'Add new course',
+                                style: Theme.of(context).textTheme.labelMedium,
+                              ),
+                            )
+                          : const SizedBox.shrink()
                     ],
                   ),
                 ),

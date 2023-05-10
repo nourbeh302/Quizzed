@@ -43,23 +43,43 @@ class StartQuizScreen extends StatelessWidget {
                   child: OutlinedButton(
                     onPressed: () async {
                       var user = await authProvider.getFireStoreUser();
-                      if (!(user!.isProfessor)) {
-                        print('Professor cannot take quizzes');
+                      if ((user!.isProfessor)) {
+                        // ignore: use_build_context_synchronously
+                        showErrorDialog(context);
                         return;
                       }
-                      print(quiz.title);
                       // ignore: use_build_context_synchronously
-                      Navigator.pushNamed(context, '/questions', arguments: quiz);
+                      Navigator.pushNamed(
+                        context,
+                        '/questions',
+                        arguments: quiz,
+                      );
                     },
-                    child: Text('Start Quiz',
-                        style: Theme.of(context).textTheme.labelMedium),
+                    child: Text(
+                      'Start Quiz',
+                      style: Theme.of(context).textTheme.labelMedium,
+                    ),
                   ),
                 ),
                 const Expanded(
-                    flex: 1, child: SizedBox.shrink()), // Empty row slot
+                  flex: 1,
+                  child: SizedBox.shrink(),
+                ), // Empty row slot
               ],
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  Future<dynamic> showErrorDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          'Professor cannot take quizzes',
+          style: Theme.of(context).textTheme.labelLarge,
         ),
       ),
     );

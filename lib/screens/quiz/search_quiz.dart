@@ -65,9 +65,11 @@ class _SearchQuizScreenState extends State<SearchQuizScreen> {
                           initialTime: _selectedTime,
                         );
                         if (selectedTime != null) {
+                          final filteredQuizzes =
+                              filterQuizzes(_quizzes, selectedTime);
                           setState(() {
                             _selectedTime = selectedTime;
-                            _quizzes = filterQuizzes(_quizzes, _selectedTime);
+                            _quizzes = filteredQuizzes;
                           });
                         }
                       },
@@ -154,18 +156,15 @@ class _SearchQuizScreenState extends State<SearchQuizScreen> {
   }
 
   List<Quiz> filterQuizzes(List<Quiz> quizzes, TimeOfDay selectedTime) {
-    return quizzes
-        .where(
-          (quiz) => quiz.createdAt.toDate().isAtSameMomentAs(
-                DateTime(
-                  DateTime.now().year,
-                  DateTime.now().month,
-                  DateTime.now().day,
-                  selectedTime.hour,
-                  selectedTime.minute,
-                ),
-              ),
-        )
-        .toList();
+    TimestampFormatter formatter = TimestampFormatter();
+
+    return quizzes.where((quiz) {
+      String formatterDateStringfied =
+          formatter.formatTimestamp(quiz.createdAt);
+      String selectedTimeStringfied =
+          "${selectedTime.hour.toString().padLeft(2, '0')}:${selectedTime.minute.toString().padLeft(2, '0')}";
+
+      return formatterDateStringfied.contains(selectedTimeStringfied);
+    }).toList();
   }
 }
