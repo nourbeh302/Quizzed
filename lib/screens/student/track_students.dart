@@ -10,7 +10,6 @@ class TrackStudentsScreen extends StatefulWidget {
 }
 
 class _TrackStudentsScreenState extends State<TrackStudentsScreen> {
-
   AuthProvider authProvider = AuthProvider();
 
   @override
@@ -18,15 +17,14 @@ class _TrackStudentsScreenState extends State<TrackStudentsScreen> {
     super.initState();
 
     authProvider.addListener(() => print('Hello world'));
+  }
 
-}
-
-@override
+  @override
   void dispose() {
     super.dispose();
 
     authProvider.removeListener(() => print('Widget destroyed'));
-}
+  }
 
   @override
   Widget build(BuildContext context) {

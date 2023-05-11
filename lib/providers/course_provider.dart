@@ -59,6 +59,15 @@ class CourseProvider with ChangeNotifier {
     }
   }
 
+  Future<void> deleteCourse(String courseId) async {
+    try {
+      var doc = await _coursesCollection.doc(courseId).delete();
+      notifyListeners();
+    } catch (error) {
+      log('Failed to add course: $error');
+    }
+  }
+
   Future<File?> selectImageFromCameraRoll() async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.camera);
